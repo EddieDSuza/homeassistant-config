@@ -1,0 +1,24 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'hallway'
+    name: 'Hallway'
+    status: [
+      {'name': 'Smoke', 'entity': 'binary_sensor.hallway_smoke'},
+      {'name': 'Climate', 'entity': 'climate.hallway'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.hallway'},
+      {'name': 'Light', 'entity': 'light.hallway'},
+      {'name': 'Temperature', 'entity': 'sensor.hallway_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.hallway_humidity'},
+      {'name': 'Illuminance', 'entity': 'sensor.hallway_illuminance_1'},
+      {'name': 'Motion', 'entity': 'binary_sensor.hallway'},
+    ]
+    scenes: [
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    show_climate: true

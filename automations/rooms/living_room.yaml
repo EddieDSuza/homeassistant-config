@@ -1,0 +1,41 @@
+- id: "living_room_presence"
+  alias: Living Room Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: living_room
+
+- id: "living_room_remote"
+  alias: Living Room Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: living_room
+      remote: sensor.living_room_remote
+
+- id: "living_room_activity"
+  alias: Living Room Activity
+  use_blueprint:
+    path: activity.yaml
+    input:
+      room: living_room
+      activity_scene: scene.living_room_movies
+      activity_sensor: binary_sensor.living_room_knock
+
+- id: "living_room_tv"
+  alias: Living Room TV
+  use_blueprint:
+    path: tv.yaml
+    input:
+      room: living_room
+      movies_scene: scene.living_room_movies
+      playstation_scene: scene.living_room_games
+      tv: media_player.living_room_tv
+      playstation: media_player.living_room_playstation
+
+- id: "living_room_tv_blinds"
+  alias: Living Room TV and Blinds
+  use_blueprint:
+    path: tv_blinds.yaml
+    input:
+      room: living_room

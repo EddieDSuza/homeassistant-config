@@ -1,0 +1,30 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'utility_room'
+    name: 'Utility Room'
+    status: [
+      {'name': 'Leak', 'entity': 'binary_sensor.utility_room_leak' },
+      {'name': 'Washing Machine', 'entity': 'sensor.utility_room_washing_machine_state'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.utility_room'},
+      {'name': 'Light', 'entity': 'light.utility_room'},
+      {'name': 'Motion', 'entity': 'binary_sensor.utility_room'},
+    ]
+    glances: [
+      'light.utility_room',
+      'input_boolean.utility_room',
+      'switch.utility_room_washing_machine',
+      'binary_sensor.utility_room_leak',
+      'binary_sensor.utility_room_door'
+    ]
+    scenes: [
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    devices: [
+      {'name': 'Washing Machine', 'entity': 'switch.utility_room_washing_machine', 'action': 'more-info'}
+    ]

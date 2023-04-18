@@ -1,0 +1,12 @@
+scene_set:
+  alias: Set Scene
+  mode: single
+  sequence:
+    - service: scene.turn_on
+      data:
+        transition: 1
+      target:
+        entity_id: "scene.{{ room }}_{{ 'off' if scene == false else scene }}"
+    - service: "input_boolean.turn_{{ switch if switch is defined else 'off' if scene == false else 'off' if scene == 'off' else 'on' }}"
+      target:
+        entity_id: "input_boolean.{{ room }}"

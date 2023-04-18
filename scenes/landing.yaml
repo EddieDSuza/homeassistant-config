@@ -1,0 +1,42 @@
+- id: 'landing_morning'
+  name: Landing Morning
+  icon: fapro:morning
+  entities:
+    light.landing:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'landing_day'
+  name: Landing Day
+  icon: fapro:day
+  entities:
+    light.landing:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'landing_evening'
+  name: Landing Evening
+  icon: fapro:evening
+  entities:
+    light.landing:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'landing_night'
+  name: Landing Night
+  icon: fapro:night
+  entities:
+    light.landing:
+      state: 'on'
+      brightness: 2
+      color_temp: 500
+
+- id: 'landing_off'
+  name: Landing Off
+  icon: mdi:power-standby
+  entities:
+    light.landing:
+      state: 'off'

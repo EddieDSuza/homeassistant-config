@@ -1,0 +1,18 @@
+- id: "toilet_presence"
+  alias: Toilet Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: toilet
+
+- id: "toilet_remote"
+  alias: Toilet Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: toilet
+      remote: sensor.toilet_remote
+      button_four_long_action:
+        - service: scene.turn_on
+          target:
+            entity_id: "scene.utility_room_off"

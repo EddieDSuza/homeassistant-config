@@ -1,0 +1,35 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'dressing_room'
+    name: 'Dressing Room'
+    status: [
+      {'name': 'Roomba 676', 'entity': 'vacuum.roomba_676'},
+      {'name': 'Windows', 'entity': 'binary_sensor.dressing_room_window'},
+      {'name': 'Climate', 'entity': 'climate.dressing_room'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.dressing_room'},
+      {'name': 'Light', 'entity': 'light.dressing_room'},
+      {'name': 'Blinds', 'entity': 'cover.dressing_room'},
+      {'name': 'Temperature', 'entity': 'sensor.dressing_room_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.dressing_room_humidity'},
+      {'name': 'Illuminance', 'entity': 'sensor.dressing_room_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.dressing_room'},
+    ]
+    scenes: [
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    lights: [
+      {'name': 'Main Light', 'id': 'main'},
+      {'name': 'Wardrobe Light', 'id': 'wardrobe'},
+      {'name': 'Table Light', 'id': 'table'}
+    ]
+    devices: [
+      {'name': 'Roomba 676', 'entity': 'vacuum.roomba_676', 'action': 'more-info'}
+    ]
+    show_cover: true
+    show_climate: true

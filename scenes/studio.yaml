@@ -1,0 +1,169 @@
+- id: 'studio_morning'
+  name: Studio Morning
+  icon: fapro:morning
+  entities:
+    light.studio_main:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+    light.studio_desk:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+    light.studio_entertainment:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+    light.studio_monitor:
+      state: 'off'
+    light.studio_desk_lamp:
+      state: 'off'
+
+- id: 'studio_day'
+  name: Studio Day
+  icon: fapro:day
+  entities:
+    light.studio_main:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+    light.studio_desk:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+    light.studio_entertainment:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+    light.studio_monitor:
+      state: 'off'
+    light.studio_desk_lamp:
+      state: 'off'
+
+- id: 'studio_evening'
+  name: Studio Evening
+  icon: fapro:evening
+  entities:
+    light.studio_main:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+    light.studio_desk:
+      state: 'on'
+      brightness: 255
+      color_temp: 400
+    light.studio_entertainment:
+      state: 'on'
+      brightness: 255
+      color_temp: 400
+    light.studio_monitor:
+      state: 'off'
+    light.studio_desk_lamp:
+      state: 'off'
+
+- id: 'studio_night'
+  name: Studio Night
+  icon: fapro:night
+  entities:
+    light.studio_main:
+      state: 'off'
+    light.studio_desk:
+      state: 'on'
+      brightness: 64
+      color_temp: 500
+    light.studio_entertainment:
+      state: 'on'
+      brightness: 64
+      color_temp: 500
+    light.studio_monitor:
+      state: 'off'
+    light.studio_desk_lamp:
+      state: 'off'
+
+- id: 'studio_off'
+  name: Studio Off
+  icon: mdi:power-standby
+  entities:
+    light.studio:
+      state: 'off'
+
+- id: 'studio_work'
+  name: Studio Work
+  icon: fapro:macbook
+  entities:
+    light.studio_main:
+      state: 'off'
+    light.studio_desk:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+    light.studio_entertainment:
+      state: 'off'
+    light.studio_monitor:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+    light.studio_desk_lamp:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'studio_movies'
+  name: Studio Movies
+  icon: mdi:movie-open
+  entities:
+    light.studio_main:
+      state: 'off'
+    light.studio_desk:
+      state: 'off'
+    light.studio_entertainment:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 255
+        - 43
+        - 128
+    light.studio_monitor:
+      state: 'off'
+    light.studio_desk_lamp:
+      state: 'off'
+
+- id: 'studio_games_playstation'
+  name: Studio Games - PlayStation
+  icon: mdi:sony-playstation
+  entities:
+    light.studio_main:
+      state: 'off'
+    light.studio_desk:
+      state: 'off'
+    light.studio_entertainment:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 70
+        - 10
+        - 255
+    light.studio_monitor:
+      state: 'off'
+    light.studio_desk_lamp:
+      state: 'off'
+
+- id: 'studio_games_xbox'
+  name: Studio Games - Xbox
+  icon: mdi:microsoft-xbox
+  entities:
+    light.studio_main:
+      state: 'off'
+    light.studio_desk:
+      state: 'off'
+    light.studio_entertainment:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 35
+        - 255
+        - 146
+    light.studio_monitor:
+      state: 'off'
+    light.studio_desk_lamp:
+      state: 'off'

@@ -1,0 +1,162 @@
+blueprint:
+  name: Room Automation - TV
+  domain: automation
+  input:
+    room:
+      name: Room
+      selector:
+        area:
+
+    movies_scene:
+      name: Movies Scene
+      default: []
+      selector:
+        entity:
+          domain: scene
+
+    playstation_scene:
+      name: PlayStation Scene
+      default: []
+      selector:
+        entity:
+          domain: scene
+
+    xbox_scene:
+      name: Xbox Scene
+      default: []
+      selector:
+        entity:
+          domain: scene
+
+    tv:
+      name: TV
+      default: []
+      selector:
+        entity:
+          domain: media_player
+
+    playstation:
+      name: PlayStation
+      default: []
+      selector:
+        entity:
+          domain: media_player
+
+    custom_off_action:
+      name: Custom off action
+      default: []
+      selector:
+        action:
+
+mode: restart
+
+trigger:
+  - platform: state
+    id: tv
+    entity_id: !input tv
+    attribute: source
+
+  - platform: state
+    id: playstation_off
+    entity_id: !input playstation
+    to: 'off'
+    for:
+      hours: 0
+      minutes: 0
+      seconds: 30
+
+variables:
+  room: !input room
+
+  sensor: 'binary_sensor.{{room}}'
+  night_mode: 'input_boolean.night'
+  bright_scene: 'scene.{{ room }}_evening'
+  dimmed_scene: 'scene.{{ room }}_night'
+  off_scene: 'scene.{{ room }}_off'
+  movies_scene: !input movies_scene
+  playstation_scene: !input playstation_scene
+  xbox_scene: !input xbox_scene
+  custom_off_action: !input custom_off_action
+
+action:
+  - choose:
+
+    # TV off
+    - conditions:
+      - condition: trigger
+        id: tv
+      - condition: state
+        entity_id: !input tv
+        state: 'off'
+      sequence:
+        - choose:
+          - conditions:
+              - "{{ custom_off_action != [] }}"
+              - "{{ is_state(sensor, 'on') }}"
+            sequence: !input custom_off_action
+          - conditions:
+              - "{{ is_state(sensor, 'on') }}"
+            sequence:
+            - service: script.light_on
+              data: 
+                room: "{{ room }}"
+          default:
+            - service: scene.turn_on
+              target:
+                entity_id: "{{ off_scene }}"
+              data:
+                transition: 1
+
+    # TV source
+    - conditions:
+      - condition: trigger
+        id: tv
+      - condition: state
+        entity_id: !input tv
+        state: 'on'
+      sequence:
+        - choose:
+            - conditions:
+                - condition: state
+                  entity_id: !input tv
+                  attribute: source
+                  state: PlayStation
+              sequence:
+                - service: scene.turn_on
+                  target:
+                    entity_id: "{{ playstation_scene }}"
+                  data:
+                    transition: 1
+            - conditions:
+                - condition: state
+                  entity_id: !input tv
+                  attribute: source
+                  state: Xbox
+              sequence:
+                - service: scene.turn_on
+                  target:
+                    entity_id: "{{ xbox_scene }}"
+                  data:
+                    transition: 1
+          default:
+            - service: scene.turn_on
+              target:
+                entity_id: "{{ movies_scene }}"
+              data:
+                transition: 1
+
+    # PlayStation off
+    - conditions:
+      - condition: trigger
+        id: playstation_off
+      - condition: state
+        entity_id: !input playstation
+        state: 'off'
+      - condition: state
+        entity_id: !input tv
+        attribute: source
+        state: 'PlayStation'
+      sequence:
+        - service: media_player.turn_off
+          target:
+            entity_id: !input tv

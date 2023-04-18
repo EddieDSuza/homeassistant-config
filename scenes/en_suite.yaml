@@ -1,0 +1,55 @@
+- id: 'en_suite_morning'
+  name: En-Suite Morning
+  icon: fapro:morning
+  entities:
+    light.en_suite:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'en_suite_day'
+  name: En-Suite Day
+  icon: fapro:day
+  entities:
+    light.en_suite:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'en_suite_evening'
+  name: En-Suite Evening
+  icon: fapro:evening
+  entities:
+    light.en_suite:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'en_suite_night'
+  name: En-Suite Night
+  icon: fapro:night
+  entities:
+    light.en_suite_main:
+      state: 'on'
+      brightness: 13
+      color_temp: 500
+    light.en_suite_shower:
+      state: 'off'
+
+- id: 'en_suite_off'
+  name: En-Suite Off
+  icon: mdi:power-standby
+  entities:
+    light.en_suite:
+      state: 'off'
+
+- id: 'en_suite_shower'
+  name: En-Suite Shower
+  icon: mdi:shower-head
+  entities:
+    light.en_suite_main:
+      state: 'off'
+    light.en_suite_shower:
+      state: 'on'
+      brightness: 180
+      color_temp: 350

@@ -1,0 +1,167 @@
+blueprint:
+  name: Room Automation - Presence
+  domain: automation
+  input:
+    room:
+      name: Room
+      selector:
+        area:
+
+    force_dimmed:
+      name: Force dimmed
+      default: false
+      selector:
+        boolean: {}
+
+    delay:
+      name: Delay
+      selector:
+        number:
+          min: 0
+          max: 1800
+          unit_of_measurement: seconds
+      default: 30
+
+    maximum_illuminance:
+      name: Maximum illuminance
+      selector:
+        number:
+          min: 0
+          max: 10000
+          unit_of_measurement: lx
+      default: 300
+
+mode: restart
+
+trigger_variables:
+  room: !input room
+  sensor: 'binary_sensor.{{room}}'
+
+trigger:
+  - platform: template
+    id: sensor_on
+    value_template: >
+      {{ is_state(sensor, 'on') }}
+
+  - platform: template
+    id: sensor_off
+    value_template: >
+      {{ is_state(sensor, 'off') }}
+
+variables:
+  room: !input room
+
+  light: 'light.{{ room }}'
+  manual_switch: 'input_boolean.{{ room }}'
+  night: 'input_boolean.night'
+
+  bright_scene: 'scene.{{ room }}_bright'
+  dimmed_scene: 'scene.{{ room }}_dimmed'
+  off_scene: 'scene.{{ room }}_off'
+
+  force_dimmed: !input force_dimmed
+
+  maximum_illuminance: !input maximum_illuminance
+  current_illuminance: >
+    {{ states('sensor.' + room + '_illuminance') | int(default=0) }}
+
+condition:
+  - condition: template
+    value_template: "{{ not is_state('media_player.' + room + '_tv', 'on') }}"
+  - condition: template
+    value_template: "{{ is_state(manual_switch, 'off') }}"
+action:
+  - choose:
+
+    # Motion detected
+    - conditions:
+      - condition: trigger
+        id: sensor_on
+      - "{{ current_illuminance < maximum_illuminance }}"
+      - "{{ is_state(light, 'off') }}"
+      sequence:
+        - choose:
+            - conditions:
+                - "{{ force_dimmed }}"
+              sequence:
+                - service: scene.turn_on
+                  data:
+                    transition: 1
+                  target:
+                    entity_id: scene.{{ room }}_night
+            - conditions:
+                - condition: state
+                  entity_id: input_boolean.night
+                  state: 'on'
+              sequence:
+                - service: scene.turn_on
+                  data:
+                    transition: 1
+                  target:
+                    entity_id: scene.{{ room }}_night
+            - conditions:
+                - condition: sun
+                  before: sunrise
+              sequence:
+                - service: scene.turn_on
+                  data:
+                    transition: 1
+                  target:
+                    entity_id: scene.{{ room }}_night
+            - conditions:
+                - condition: time
+                  before: "11:00:00"
+              sequence:
+                - service: scene.turn_on
+                  data:
+                    transition: 1
+                  target:
+                    entity_id: scene.{{ room }}_morning
+            - conditions:
+                - condition: time
+                  before: "21:00:00"
+              sequence:
+                - service: scene.turn_on
+                  data:
+                    transition: 1
+                  target:
+                    entity_id: scene.{{ room }}_day
+            - conditions:
+                - condition: time
+                  after: "21:00:00"
+              sequence:
+                - service: scene.turn_on
+                  data:
+                    transition: 1
+                  target:
+                    entity_id: scene.{{ room }}_evening
+
+        # - choose:
+        #   - conditions:
+        #     - "{{ is_state(night, 'off') }}"
+        #     - "{{ not force_dimmed }}"
+        #     sequence:
+        #     - service: scene.turn_on
+        #       target:
+        #         entity_id: "{{ bright_scene }}"
+        #       data:
+        #         transition: 1
+        #   default:
+        #     - service: scene.turn_on
+        #       target:
+        #         entity_id: "{{ dimmed_scene }}"
+        #       data:
+        #         transition: 1
+
+    # Motion not detected
+    - conditions:
+      - condition: trigger
+        id: sensor_off
+      sequence:
+        - delay: !input delay
+        - condition: "{{ is_state(manual_switch, 'off') }}"
+        - service: scene.turn_on
+          data:
+            transition: 1
+          target:
+            entity_id: scene.{{ room }}_off

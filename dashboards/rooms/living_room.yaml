@@ -1,0 +1,41 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'living_room'
+    name: 'Living Room'
+    status: [
+      {'name': 'Door', 'entity': 'binary_sensor.living_room_door'},
+      {'name': 'Windows', 'entity': 'binary_sensor.living_room_window'},
+      {'name': 'Climate', 'entity': 'climate.living_room'},
+      {'name': 'TV', 'entity': 'media_player.living_room_tv'},
+      {'name': 'PlayStation', 'entity': 'media_player.living_room_playstation'},
+      {'name': 'Light', 'entity': 'light.living_room'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.living_room'},
+      {'name': 'Curtain', 'entity': 'cover.living_room'},
+      {'name': 'Temperature', 'entity': 'sensor.living_room_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.living_room_humidity'},
+      {'name': 'Illuminance', 'entity': 'sensor.living_room_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.living_room'},
+    ]
+    scenes: [
+      'movies',
+      'games',
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    lights: [
+      {'name': 'Main Light', 'id': 'main'},
+      {'name': 'Ambient Light', 'id': 'ambient', 'large': true}
+    ]
+    media_players: [
+      {'name': 'TV', 'id': 'tv', 'on_off': true, 'volume_controls': false, 'media_controls': false, 'large': true},
+      {'name': 'Apple TV', 'id': 'apple_tv', 'on_off': true, 'volume_controls': false, 'media_controls': true},
+      {'name': 'PlayStation 5', 'id': 'playstation', 'on_off': true, 'volume_controls': false, 'media_controls': false, 'large': true},
+      {'name': 'Sonos', 'id': 'sonos', 'on_off': false, 'volume_controls': true, 'media_controls': true},
+    ]
+    show_cover: true
+    show_climate: true

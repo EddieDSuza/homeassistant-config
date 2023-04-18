@@ -1,0 +1,42 @@
+- id: 'garage_morning'
+  name: Garage Morning
+  icon: fapro:morning
+  entities:
+    light.garage:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'garage_day'
+  name: Garage Day
+  icon: fapro:day
+  entities:
+    light.garage:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'garage_evening'
+  name: Garage Evening
+  icon: fapro:evening
+  entities:
+    light.garage:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'garage_night'
+  name: Garage Night
+  icon: fapro:night
+  entities:
+    light.garage:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'garage_off'
+  name: Garage Off
+  icon: mdi:power-standby
+  entities:
+    light.garage:
+      state: 'off'

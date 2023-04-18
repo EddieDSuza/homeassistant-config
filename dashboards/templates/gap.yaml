@@ -1,0 +1,11 @@
+gap:
+  styles:
+    card:
+      - '--mdc-ripple-press-opacity': 0
+      - background-color: rgba(0, 0, 0, 0)
+      - border: none
+      - border-radius: 0px
+      - box-shadow: none
+      - height: 1em
+      - width: 1em
+      - padding: 0

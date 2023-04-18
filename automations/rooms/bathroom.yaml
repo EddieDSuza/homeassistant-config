@@ -1,0 +1,47 @@
+- id: "bathroom_presence"
+  alias: Bathroom Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: bathroom
+      delay: 120
+
+- id: "bathroom_remote"
+  alias: Bathroom Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: bathroom
+      remote: sensor.bathroom_remote
+      button_two_short_action:
+        - service: scene.turn_on
+          target:
+            entity_id: "scene.bathroom_shower"
+          data:
+            transition: 1
+        - service: input_boolean.turn_on
+          target:
+            entity_id: "input_boolean.bathroom"
+      button_three_short_action:
+        - service: scene.turn_on
+          target:
+            entity_id: "scene.bathroom_bath"
+          data:
+            transition: 1
+        - service: input_boolean.turn_on
+          target:
+            entity_id: "input_boolean.bathroom"
+
+- id: "bathroom_fan"
+  alias: Bathroom Fan
+  use_blueprint:
+    path: fan.yaml
+    input:
+      room: bathroom
+
+- id: "bathroom_shower"
+  alias: Bathroom Shower
+  use_blueprint:
+    path: shower.yaml
+    input:
+      room: bathroom

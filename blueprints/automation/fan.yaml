@@ -1,0 +1,53 @@
+blueprint:
+  name: Room Automation - Fan
+  domain: automation
+  input:
+    room:
+      name: Room
+      selector:
+        area:
+
+mode: restart
+
+trigger_variables:
+  room: !input room
+  light: 'light.{{ room }}'
+
+trigger:
+  - platform: template
+    id: light_on
+    value_template: >
+      {{ is_state(light, 'on') }}
+
+  - platform: template
+    id: light_off
+    value_template: >
+      {{ is_state(light, 'off') }}
+
+variables:
+  room: !input room
+  fan: 'fan.{{ room }}'
+
+action:
+  - choose:
+
+    # Light On
+    - conditions:
+      - condition: trigger
+        id: light_on
+      - "{{ states(fan) != 'unknown' }}"
+      sequence:
+        - service: fan.turn_on
+          target:
+            entity_id: "{{ fan }}"
+
+    # Light Off
+    - conditions:
+      - condition: trigger
+        id: light_off
+      - "{{ states(fan) != 'unknown' }}"
+      sequence:
+        - delay: 180
+        - service: fan.turn_off
+          target:
+            entity_id: "{{ fan }}"

@@ -1,0 +1,104 @@
+- id: 'garbage_reminder'
+  alias: Garbage Collection Reminder
+  mode: single
+  trigger:
+    - platform: time
+      at: "19:00:00"
+    - platform: time
+      at: "20:00:00"
+    - platform: time
+      at: "21:00:00"
+    - platform: time
+      at: "22:00:00"
+    - platform: time
+      at: "23:00:00"
+  condition:
+    - condition: state
+      entity_id: input_boolean.kitchen_bins
+      state: "off"
+    - condition: template
+      value_template: |-
+        {% set types = [
+          ('residualNextDate', 'General Waste'),
+          ('recyclingNextDate', 'Recycling'),
+          ('organicNextDate', 'Garden Waste')
+        ] %}
+        {% set data = namespace(types=[]) %}
+        {% for type in types %}
+          {% set collection = as_timestamp(
+            strptime(
+              state_attr(
+                'sensor.garbage_collection',
+                type.0
+              ),
+              '%Y-%m-%dT%H:%M:%S'
+            )
+          ) %}
+          {% set today = as_timestamp(now().date()) %}
+          {% set countdown = (collection - today) / (3600*24) %}
+          {% if countdown ==  1 %}
+            {% set data.types = data.types + [type.1] %}
+          {% endif %}
+        {% endfor %}
+        {{ data.types | length > 0 }}
+  action:
+    - service: notify.mobile
+      data:
+        title: "Garbage Collection"
+        message: >-
+          {% set types = [
+            ('residualNextDate', 'General Waste'),
+            ('recyclingNextDate', 'Recycling'),
+            ('organicNextDate', 'Garden Waste')
+          ] %}
+          {% set data = namespace(types=[]) %}
+          {% for type in types %}
+            {% set collection = as_timestamp(
+              strptime(
+                state_attr(
+                  'sensor.garbage_collection',
+                  type.0
+                ),
+                '%Y-%m-%dT%H:%M:%S'
+              )
+            ) %}
+            {% set today = as_timestamp(now().date()) %}
+            {% set countdown = (collection - today) / (3600*24) %}
+            {% if countdown ==  1 %}
+              {% set data.types = data.types + [type.1] %}
+            {% endif %}
+          {% endfor %}
+          Remember to put out your trashes for tomorrow collection.
+          They are going to collect {{ data.types|join(' and ') }}
+        data:
+          push:
+            interruption-level: 'time-sensitive'
+          actions:
+            - action: "notification_bins_empty" 
+              title: "Mark as empty"
+
+- id: 'reset_kitchen_bins_state'
+  alias: Reset Kitchen Bins State
+  mode: single
+  trigger:
+    - platform: time
+      at: "00:00:00"
+  action:
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.kitchen_bins
+
+- id: 'set_kitchen_bins_empty'
+  alias: Set Kitchen Bins Empty
+  mode: single
+  trigger:
+    - platform: event
+      event_type: mobile_app_notification_action
+      event_data:
+        action: "notification_bins_empty"
+    # - platform: tag
+    #   tag_id: 931d7995-ccae-4030-aefa-d20dc264a8fb
+  action:
+    - service: input_boolean.turn_on
+      target:
+        entity_id: input_boolean.kitchen_bins

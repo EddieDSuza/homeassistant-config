@@ -1,0 +1,34 @@
+- id: 'printer_room_morning'
+  name: Printer Room Morning
+  icon: fapro:morning
+  entities:
+    light.printer_room:
+      state: 'on'
+
+- id: 'printer_room_day'
+  name: Printer Room Day
+  icon: fapro:day
+  entities:
+    light.printer_room:
+      state: 'on'
+
+- id: 'printer_room_evening'
+  name: Printer Room Evening
+  icon: fapro:evening
+  entities:
+    light.printer_room:
+      state: 'on'
+
+- id: 'printer_room_night'
+  name: Printer Room Night
+  icon: fapro:night
+  entities:
+    light.printer_room:
+      state: 'off'
+
+- id: 'printer_room_off'
+  name: Printer Room Off
+  icon: mdi:power-standby
+  entities:
+    light.printer_room:
+      state: 'off'

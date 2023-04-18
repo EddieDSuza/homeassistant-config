@@ -1,0 +1,7 @@
+- id: "garage_presence"
+  alias: Garage Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: garage
+      delay: 0

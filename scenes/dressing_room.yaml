@@ -1,0 +1,54 @@
+- id: 'dressing_room_morning'
+  name: Dressing Room Morning
+  icon: fapro:morning
+  entities:
+    light.dressing_room:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'dressing_room_day'
+  name: Dressing Room Day
+  icon: fapro:day
+  entities:
+    light.dressing_room:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'dressing_room_evening'
+  name: Dressing Room Evening
+  icon: fapro:evening
+  entities:
+    light.dressing_room_main:
+      state: 'off'
+    light.dressing_room_table:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+    light.dressing_room_wardrobe:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'dressing_room_night'
+  name: Dressing Room Night
+  icon: fapro:night
+  entities:
+    light.dressing_room_main:
+      state: 'off'
+    light.dressing_room_table:
+      state: 'on'
+      brightness: 13
+      color_temp: 500
+    light.dressing_room_wardrobe:
+      state: 'on'
+      brightness: 13
+      color_temp: 500
+
+- id: 'dressing_room_off'
+  name: Dressing Room Off
+  icon: mdi:power-standby
+  entities:
+    light.dressing_room:
+      state: 'off'

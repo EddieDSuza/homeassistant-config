@@ -1,0 +1,16 @@
+- id: "dressing_room_presence"
+  alias: Dressing Room Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: dressing_room
+
+- id: "dressing_room_remote"
+  alias: Dressing Room Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: dressing_room
+      remote: 
+        - sensor.dressing_room_remote
+        - sensor.dressing_room_mini_remote

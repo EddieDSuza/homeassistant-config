@@ -1,0 +1,42 @@
+- id: 'office_morning'
+  name: Office Morning
+  icon: fapro:morning
+  entities:
+    light.office:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'office_day'
+  name: Office Day
+  icon: fapro:day
+  entities:
+    light.office:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'office_evening'
+  name: Office Evening
+  icon: fapro:evening
+  entities:
+    light.office:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'office_night'
+  name: Office Night
+  icon: fapro:night
+  entities:
+    light.office:
+      state: 'on'
+      brightness: 2
+      color_temp: 500
+
+- id: 'office_off'
+  name: Office Off
+  icon: mdi:power-standby
+  entities:
+    light.office:
+      state: 'off'

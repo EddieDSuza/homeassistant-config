@@ -1,0 +1,53 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'bedroom'
+    name: 'Bedroom'
+    status: [
+      {'name': 'Windows', 'entity': 'binary_sensor.bedroom_window'},
+      {'name': 'Climate', 'entity': 'climate.bedroom'},
+      {'name': "Dominika Charger", 'entity': 'switch.bedroom_charger_1'},
+      {'name': 'Watch Charger', 'entity': 'switch.bedroom_charger_watch'},
+      {'name': 'iPhone Charger', 'entity': 'switch.bedroom_charger_iphone'},
+      {'name': 'iPad Charger', 'entity': 'switch.bedroom_charger_ipad'},
+      {'name': 'USB', 'entity': 'switch.bedroom_usb'},
+      {'name': 'Socket', 'entity': 'switch.bedroom_socket'},
+      {'name': 'Bed Occupancy', 'entity': 'binary_sensor.bedroom_bed'},
+      {'name': 'HomePod', 'entity': 'media_player.bedroom_homepod'},
+      {'name': 'TV', 'entity': 'media_player.bedroom_tv'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.bedroom'},
+      {'name': 'Light', 'entity': 'light.bedroom'},
+      {'name': 'Blinds', 'entity': 'cover.bedroom'},
+      {'name': 'Temperature', 'entity': 'sensor.bedroom_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.bedroom_humidity'},
+      {'name': 'Illuminance', 'entity': 'sensor.bedroom_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.bedroom'},
+    ]
+    scenes: [
+      'movies',
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    lights: [
+      {'name': 'Main Light', 'id': 'main'},
+      {'name': 'Bed Light', 'id': 'bed'}
+    ]
+    media_players: [
+      {'name': 'HomePod', 'id': 'homepod', 'on_off': false, 'volume_controls': true, 'media_controls': true, 'large': true},
+      {'name': 'TV', 'id': 'tv', 'on_off': true, 'volume_controls': true, 'media_controls': false},
+      {'name': 'Apple TV', 'id': 'apple_tv', 'on_off': true, 'volume_controls': false, 'media_controls': true}
+    ]
+    devices: [
+      {'name': "Dominika's Charger", 'entity': 'switch.bedroom_charger_1', 'large': true},
+      {'name': 'Watch Charger', 'entity': 'switch.bedroom_charger_watch'},
+      {'name': 'iPhone Charger', 'entity': 'switch.bedroom_charger_iphone', 'large': true},
+      {'name': 'USB', 'entity': 'switch.bedroom_usb'},
+      {'name': 'Socket', 'entity': 'switch.bedroom_socket'},
+      {'name': 'iPad Charger', 'entity': 'switch.bedroom_charger_ipad'},
+    ]
+    show_cover: true
+    show_climate: true

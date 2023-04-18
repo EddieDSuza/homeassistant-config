@@ -1,0 +1,6 @@
+- id: "landing_presence"
+  alias: Landing Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: landing

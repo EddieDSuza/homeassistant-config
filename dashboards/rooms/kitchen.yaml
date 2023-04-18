@@ -1,0 +1,42 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'kitchen'
+    name: 'Kitchen'
+    status: [
+      {'name': 'Sink Leak', 'entity': 'binary_sensor.kitchen_leak_sink'},
+      {'name': 'Dishwasher Leak', 'entity': 'binary_sensor.kitchen_leak_dishwasher'},
+      {'name': 'Oven', 'entity':'switch.kitchen_oven'},
+      {'name': 'Microwave', 'entity':'switch.kitchen_microwave'},
+      {'name': 'Door', 'entity': 'binary_sensor.kitchen_door'},
+      {'name': 'Windows', 'entity': 'binary_sensor.kitchen_window'},
+      {'name': 'Kettle', 'entity': 'sensor.kitchen_kettle_temperature'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.kitchen'},
+      {'name': 'Light', 'entity': 'light.kitchen'},
+      {'name': 'Smart Garden', 'entity':'switch.kitchen_smart_garden'},
+      {'name': 'Temperature', 'entity': 'sensor.kitchen_temperature'},
+      {'name': 'Illuminance', 'entity': 'sensor.kitchen_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.kitchen'},
+      {'name': 'Bins', 'entity': 'input_boolean.kitchen_bins'}
+    ]
+    scenes: [
+      'cooking',
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    lights: [
+      {'name': 'Main Light', 'id': 'main'},
+      {'name': 'Cooker Hood Light', 'id': 'cooker_hood', 'large': true},
+      {'name': 'Ambient Light', 'id': 'ambient'},
+      {'name': 'Worktop Light', 'id': 'worktop'},
+    ]
+    devices: [
+      {'name': 'Smart Garden', 'entity': 'switch.kitchen_smart_garden'},
+      {'name': 'Oven', 'entity': 'switch.kitchen_oven', 'action': 'more-info'},
+      {'name': 'Microwave', 'entity': 'switch.kitchen_microwave', 'action': 'more-info'},
+      {'name': 'Bins', 'entity': 'input_boolean.kitchen_bins'}
+    ]

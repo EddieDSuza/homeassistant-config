@@ -1,0 +1,25 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'guest_room'
+    name: 'Guest Room'
+    status: [
+      {'name': 'Windows', 'entity': 'binary_sensor.guest_room_window'},
+      {'name': 'Climate', 'entity': 'climate.guest_room'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.guest_room'},
+      {'name': 'Light', 'entity': 'light.guest_room'},
+      {'name': 'Blinds', 'entity': 'cover.guest_room'},
+      {'name': 'Temperature', 'entity': 'sensor.guest_room_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.guest_room_humidity'},
+      {'name': 'Motion', 'entity': 'binary_sensor.guest_room'},
+    ]
+    scenes: [
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    show_cover: true
+    show_climate: true

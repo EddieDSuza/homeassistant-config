@@ -1,0 +1,79 @@
+- id: 'kitchen_morning'
+  name: Kitchen Morning
+  icon: fapro:morning
+  entities:
+    light.kitchen_main:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+    light.kitchen_ambient:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+    light.kitchen_worktop:
+      state: 'off'
+    light.kitchen_cooker_hood:
+      state: 'off'
+
+- id: 'kitchen_day'
+  name: Kitchen Day
+  icon: fapro:day
+  entities:
+    light.kitchen_main:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+    light.kitchen_ambient:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+    light.kitchen_worktop:
+      state: 'off'
+    light.kitchen_cooker_hood:
+      state: 'off'
+
+- id: 'kitchen_evening'
+  name: Kitchen Evening
+  icon: fapro:evening
+  entities:
+    light.kitchen_main:
+      state: 'off'
+    light.kitchen_ambient:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+    light.kitchen_worktop:
+      state: 'off'
+    light.kitchen_cooker_hood:
+      state: 'off'
+
+- id: 'kitchen_night'
+  name: Kitchen Night
+  icon: fapro:night
+  entities:
+    light.kitchen_main:
+      state: 'off'
+    light.kitchen_ambient:
+      state: 'on'
+      brightness: 77
+      color_temp: 500
+    light.kitchen_worktop:
+      state: 'off'
+    light.kitchen_cooker_hood:
+      state: 'off'
+
+- id: 'kitchen_off'
+  name: Kitchen Off
+  icon: mdi:power-standby
+  entities:
+    light.kitchen:
+      state: 'off'
+
+- id: 'kitchen_cooking'
+  name: Kitchen Cooking
+  icon: mdi:food
+  entities:
+    light.kitchen:
+      state: 'on'
+      brightness: 255
+      color_temp: 150

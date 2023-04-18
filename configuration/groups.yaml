@@ -1,0 +1,20 @@
+switches:
+  name: All Switches
+  entities:
+    - input_boolean.bathroom
+    - input_boolean.bedroom
+    - input_boolean.dining_room
+    - input_boolean.dressing_room
+    - input_boolean.en_suite
+    - input_boolean.garage
+    - input_boolean.guest_room
+    - input_boolean.hallway
+    - input_boolean.kitchen
+    - input_boolean.landing
+    - input_boolean.living_room
+    - input_boolean.office
+    - input_boolean.outside
+    - input_boolean.printer_room
+    - input_boolean.studio
+    - input_boolean.toilet
+    - input_boolean.utility_room

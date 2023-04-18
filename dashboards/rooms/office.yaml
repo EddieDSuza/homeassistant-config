@@ -1,0 +1,30 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'office'
+    name: 'Office'
+    status: [
+      {'name': 'Window', 'entity': 'binary_sensor.office_window'},
+      {'name': 'Climate', 'entity': 'climate.office'},
+      {'name': 'HomePod', 'entity': 'media_player.office_homepod'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.office'},
+      {'name': 'Light', 'entity': 'light.office'},
+      {'name': 'Blinds', 'entity': 'cover.office'},
+      {'name': 'Temperature', 'entity': 'sensor.office_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.office_humidity'},
+      {'name': 'Illuminance', 'entity': 'sensor.office_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.office'},
+    ]
+    scenes: [
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    media_players: [
+      {'name': 'HomePod', 'id': 'homepod', 'on_off': false, 'volume_controls': true, 'media_controls': true},
+    ]
+    show_cover: true
+    show_climate: true

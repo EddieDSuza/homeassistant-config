@@ -1,0 +1,29 @@
+- id: "everyone_leave"
+  alias: Everyone leave
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: zone.home
+      to: "0"
+  action:
+    - service: light.turn_off
+      target:
+        entity_id: light.inside
+    - service: homeassistant.turn_off
+      target:
+        entity_id: group.switches
+
+    - service: media_player.turn_off
+      target:
+        entity_id:
+          - media_player.living_room_tv
+          - media_player.studio_tv
+          - media_player.bedroom_tv
+    # - service: media_player.media_stop
+    #   target:
+    #     entity_id:
+    #       - media_player.dining_room_homepod
+    #       - media_player.office_homepod
+    #       - media_player.bedroom_homepod
+    #       - media_player.studio_homepod_left
+    #       - media_player.studio_homepod_right

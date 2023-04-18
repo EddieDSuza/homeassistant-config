@@ -1,0 +1,16 @@
+subheader:
+  styles:
+    card:
+      - '--mdc-ripple-press-opacity': 0
+      - background-color: rgba(0, 0, 0, 0)
+      - border: none
+      - border-radius: 0
+      - box-shadow: none
+      - width: 100%
+      - padding: 12px 8px 0px
+    name:
+      - justify-self: start
+      - align-self: center
+      - font-size: 1em
+      - font-weight: 500
+      - text-shadow: 0px 0px 1px rgba(0,0,0,0.5)

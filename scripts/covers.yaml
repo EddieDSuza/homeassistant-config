@@ -1,0 +1,62 @@
+covers_open:
+  alias: Covers - open
+  mode: single
+  sequence:
+    - variables:
+        covers: >
+          {% set data = namespace(covers=[]) %}
+          {% set areas = ['dining_room', 'dressing_room', 'living_room', 'office', 'studio'] %}
+          {% for area in areas %}
+            {% set data.covers = data.covers + ['cover.' + area] %}
+          {% endfor %}
+
+          {% set area = 'guest_room' %}
+          {% if is_state('calendar.guests_guests', 'off') %}
+            {% set data.covers = data.covers + ['cover.' + area] %}
+          {% endif %}
+
+          {{ data.covers }}
+
+    - service: cover.open_cover
+      target:
+        entity_id: "{{ covers }}"
+    - delay: 600
+    - service: cover.open_cover
+      target:
+        entity_id: "{{ covers }}"
+
+covers_close:
+  alias: Covers - close
+  mode: single
+  sequence:
+    - variables:
+        covers: >
+          {% set data = namespace(covers=[]) %}
+          {% set areas = ['bedroom', 'dining_room', 'dressing_room', 'living_room', 'office', 'studio'] %}
+
+          {% for area in areas %}
+            {% if (is_state('binary_sensor.'+ area +'_window', 'off')) and (not is_state('binary_sensor.'+ area +'_door', 'on')) %}
+              {% set data.covers = data.covers + ['cover.' + area] %}
+            {% endif %}
+          {% endfor %}
+
+          {% set area = 'guest_room' %}
+          {% if is_state('binary_sensor.'+ area +'_window', 'off') and is_state('calendar.guests_guests', 'off') %}
+            {% set data.covers = data.covers + ['cover.' + area] %}
+          {% endif %}
+
+          {{ data.covers }}
+
+    - service: cover.close_cover
+      target:
+        entity_id: "{{ covers }}"
+    - delay: 600
+    - service: cover.close_cover
+      target:
+        entity_id: "{{ covers }}"
+    - service: script.windows_notification
+      data:
+        title: "Closing covers was prevented by opened windows"
+        level: "time-sensitive"
+        data:
+          url: "/dashboard-home"

@@ -1,0 +1,26 @@
+- id: "printer_room_presence"
+  alias: Printer Room Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: printer_room
+      delay: 0
+
+- id: 'printer_room_printer_finished_notification'
+  alias: Printer Room - Printer finished notification
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.printer_room_3d_printer_printing
+      from: "on"
+      to: "off"
+  action:
+    - wait_for_trigger:
+        - platform: numeric_state
+          entity_id: sensor.printer_room_3d_printer_current_bed_temperature
+          below: "35"
+      continue_on_timeout: false
+    - service: notify.maciej
+      data:
+        title: Printing finished!
+        message: Ender 3 v2 just finished printing. Go check out your newest print.

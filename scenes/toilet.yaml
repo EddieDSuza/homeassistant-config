@@ -1,0 +1,42 @@
+- id: 'toilet_morning'
+  name: Toilet Morning
+  icon: fapro:morning
+  entities:
+    light.toilet:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'toilet_day'
+  name: Toilet Day
+  icon: fapro:day
+  entities:
+    light.toilet:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'toilet_evening'
+  name: Toilet Evening
+  icon: fapro:evening
+  entities:
+    light.toilet:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'toilet_night'
+  name: Toilet Night
+  icon: fapro:night
+  entities:
+    light.toilet:
+      state: 'on'
+      brightness: 2
+      color_temp: 500
+
+- id: 'toilet_off'
+  name: Toilet Off
+  icon: mdi:power-standby
+  entities:
+    light.toilet:
+      state: 'off'

@@ -1,0 +1,45 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'dining_room'
+    name: 'Dining Room'
+    status: [
+      {'name': 'Roomba i7+', 'entity': 'vacuum.roomba_i7'},
+      {'name': 'Braava jet m6', 'entity': 'vacuum.braava_jet_m6'},
+      {'name': 'Windows', 'entity': 'binary_sensor.dining_room_window'},
+      {'name': 'Climate', 'entity': 'climate.dining_room'},
+      {'name': 'HomePod', 'entity': 'media_player.dining_room_homepod'},
+      {'name': 'TV', 'entity': 'media_player.dining_room_tv'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.dining_room'},
+      {'name': 'Light', 'entity': 'light.dining_room'},
+      {'name': 'Blinds', 'entity': 'cover.dining_room'},
+      {'name': 'Temperature', 'entity': 'sensor.dining_room_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.dining_room_humidity'},
+      {'name': 'Illuminance', 'entity': 'sensor.dining_room_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.dining_room'},
+    ]
+    scenes: [
+      'eating',
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    lights: [
+      {'name': 'Table Light', 'id': 'table'},
+      {'name': 'Main Light', 'id': 'main'},
+      {'name': 'Entrance Light', 'id': 'entrance'}
+    ]
+    media_players: [
+      {'name': 'HomePod', 'id': 'homepod', 'on_off': false, 'volume_controls': true, 'media_controls': true, 'large': true},
+      {'name': 'TV', 'id': 'tv', 'on_off': true, 'volume_controls': true, 'media_controls': false},
+      {'name': 'Apple TV', 'id': 'apple_tv', 'on_off': true, 'volume_controls': false, 'media_controls': true},
+    ]
+    devices: [
+      {'name': 'Roomba i7+', 'entity': 'vacuum.roomba_i7', 'action': 'more-info'},
+      {'name': 'Braava jet m6', 'entity': 'vacuum.braava_jet_m6', 'action': 'more-info'},
+    ]
+    show_cover: true
+    show_climate: true

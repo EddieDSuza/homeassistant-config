@@ -1,0 +1,196 @@
+# lovelace_gen
+
+                      {% macro scene(id, room) -%}
+                      - type: custom:button-card
+                        template: tile_scene
+                        entity: scene.{{room}}_{{id}}
+                        variables:
+                          room: {{ room }}
+                          id: {{id}}
+                      {%- endmacro %}
+
+                          {% macro tile(entity, name, large, action) -%}
+                          - type: custom:button-card
+                            entity: {{entity}}
+                            name: {{name}}
+                            template: 
+                              - {{'tile_large' if large else 'tile'}}
+                            tap_action:
+                              action: {{action if action else 'toggle'}}
+                          {%- endmacro %}
+
+type: vertical-stack
+cards:
+  - type: custom:layout-card
+    layout_type: custom:grid-layout
+    layout:
+      grid-template-columns: 30% 70%
+      mediaquery:
+        "(max-width: 600px)":
+          grid-template-columns: 100%
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: custom:button-card
+            template: clock
+          - type: weather-forecast
+            show_current: true
+            show_forecast: false
+            entity: weather.home
+            name: ""
+            card_mod:
+              class: transparent
+          - type: custom:hourly-weather
+            entity: weather.home
+            num_segments: '8'
+            icons: true
+            name: ' '
+            card_mod:
+              class: transparent
+
+          - type: custom:atomic-calendar-revive
+            entities:
+              - calendar.shared
+              - calendar.dominika
+              - calendar.maciej
+              - calendar.guests
+              - calendar.events
+            firstDayOfWeek: 1
+            maxDaysToShow: 14
+            refreshInterval: 60
+            showCurrentEventLine: false
+            showMonth: true
+            showWeekDay: true
+            showProgressBar: false
+            showDescription: false
+            showLoader: false
+            showLocation: false
+            card_mod:
+              class: transparent
+
+
+      - type: vertical-stack
+        cards:
+          - !include
+            - ../sections/status.yaml
+            - entities: [
+              {'name': 'Leak', 'entity': 'binary_sensor.leak'},
+              {'name': 'Smoke', 'entity': 'binary_sensor.smoke'},
+              {'name': 'Alarm', 'entity': 'alarm_control_panel.alarm'},
+              {'name': 'Locks', 'entity': 'lock.all'},
+              {'name': 'Garage Door', 'entity': 'cover.garage'},
+              {'name': 'Windows', 'entity': 'binary_sensor.windows'},
+              {'name': 'Doors', 'entity': 'binary_sensor.doors'},
+              {'name': 'Oven', 'entity': 'switch.kitchen_oven'},
+              {'name': 'Microwave', 'entity': 'switch.kitchen_microwave'},
+              {'name': 'Washing Machine', 'entity': 'sensor.utility_room_washing_machine_state'},
+              {'name': 'Night Mode', 'entity': 'input_boolean.night'},
+              {'name': 'Roomba i7+', 'entity': 'vacuum.roomba_i7'},
+              {'name': 'Braava jet m6', 'entity': 'vacuum.braava_jet_m6'},
+              {'name': 'Roomba 676', 'entity': 'vacuum.roomba_676'},
+              {'name': 'Media Players', 'entity': 'binary_sensor.media_players'},
+              {'name': 'Manual Control', 'entity': 'group.switches'},
+              {'name': 'Lights', 'entity': 'light.all'},
+              {'name': 'Covers', 'entity': 'cover.all'},
+              {'name': '3D Printer', 'entity': 'sensor.printer_room_3d_printer_state'},
+              {'name': 'General Waste', 'entity': 'sensor.garbage_collection_general'},
+              {'name': 'Recycling', 'entity': 'sensor.garbage_collection_recycling'},
+              {'name': 'Garden Waste', 'entity': 'sensor.garbage_collection_garden'},
+              {'name': 'Temperature', 'entity': 'sensor.inside_temperature'},
+            ]
+
+
+          - type: custom:layout-card
+            layout_type: custom:grid-layout
+            layout:
+              grid-template-columns: 50% 50%
+            cards:
+              - type: vertical-stack
+                cards:
+                  - type: custom:button-card
+                    name: Kitchen
+                    template: 
+                      - header
+                      - navigate
+                    tap_action:
+                      navigation_path: 'kitchen'
+
+                  - type: custom:button-card
+                    template: subheader
+                    name: Scenes
+
+                  - type: custom:layout-card
+                    layout_type: custom:grid-layout
+                    layout:
+                      grid-template-columns: 50% 50%
+                    cards:
+                      {{ scene('cooking', 'kitchen') }}
+                      {{ scene('off', 'kitchen') }}
+
+                  - type: custom:button-card
+                    template: subheader
+                    name: Devices
+
+                  - type: custom:layout-card
+                    layout_type: custom:grid-layout
+                    layout:
+                      grid-template-columns: 50% 50%
+                    cards:
+                      - type: vertical-stack
+                        cards:
+                          {{ tile('light.kitchen_main', 'Main Light', true, 'toggle') }}
+                          {{ tile('light.kitchen_worktop', 'Worktop Light', false, 'toggle') }}
+                          {{ tile('switch.kitchen_oven', 'Oven', true, 'more-info') }}
+
+                      - type: vertical-stack
+                        cards:
+                          {{ tile('light.kitchen_ambient', 'Ambient Light', false, 'toggle') }}
+                          {{ tile('light.kitchen_cooker_hood', 'Cooker Hood Light', true, 'toggle') }}
+                          {{ tile('switch.kitchen_microwave', 'Microwave', false, 'more-info') }}
+                          {{ tile('switch.kitchen_smart_garden', 'Smart Garden', false, 'more-info') }}
+
+
+              - type: vertical-stack
+                cards:
+                  - type: custom:button-card
+                    name: Dining Room
+                    template: 
+                      - header
+                      - navigate
+                    tap_action:
+                      navigation_path: 'dining_room'
+
+                  - type: custom:button-card
+                    template: subheader
+                    name: Scenes
+
+                  - type: custom:layout-card
+                    layout_type: custom:grid-layout
+                    layout:
+                      grid-template-columns: 50% 50%
+                    cards:
+                      {{ scene('eating', 'dining_room') }}
+                      {{ scene('off', 'dining_room') }}
+
+                  - type: custom:button-card
+                    template: subheader
+                    name: Devices
+
+                  - type: custom:layout-card
+                    layout_type: custom:grid-layout
+                    layout:
+                      grid-template-columns: 50% 50%
+                    cards:
+                      - type: vertical-stack
+                        cards:
+                          {{ tile('light.dining_room_main', 'Main Light', false, 'toggle') }}
+                          {{ tile('light.dining_room_entrance', 'Entrance Light', false, 'toggle') }}
+                          {{ tile('media_player.dining_room_homepod', 'HomePod', true, 'more-info') }}
+                          {{ tile('climate.dining_room', 'Climate', false, 'more-info') }}
+
+                      - type: vertical-stack
+                        cards:
+                          {{ tile('light.dining_room_table', 'Table Light', true, 'toggle') }}
+                          {{ tile('media_player.dining_room_tv', 'TV', false, 'toggle') }}
+                          {{ tile('cover.dining_room', 'Blinds', true, 'more-info') }}
+

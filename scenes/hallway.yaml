@@ -1,0 +1,42 @@
+- id: 'hallway_morning'
+  name: Hallway Morning
+  icon: fapro:morning
+  entities:
+    light.hallway:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'hallway_day'
+  name: Hallway Day
+  icon: fapro:day
+  entities:
+    light.hallway:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'hallway_evening'
+  name: Hallway Evening
+  icon: fapro:evening
+  entities:
+    light.hallway:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'hallway_night'
+  name: Hallway Night
+  icon: fapro:night
+  entities:
+    light.hallway:
+      state: 'on'
+      brightness: 26
+      color_temp: 500
+
+- id: 'hallway_off'
+  name: Hallway Off
+  icon: mdi:power-standby
+  entities:
+    light.hallway:
+      state: 'off'

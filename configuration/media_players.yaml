@@ -1,0 +1,29 @@
+- platform: universal
+  name: Studio PlayStation 5
+  state_template: "{{ states('switch.studio_playstation') }}"
+  commands:
+    turn_on:
+      service: switch.turn_on
+      target:
+        entity_id: switch.studio_playstation
+    turn_off:
+      service: switch.turn_off
+      target:
+        entity_id: switch.studio_playstation
+  device_class: receiver
+  unique_id: studio_playstation
+
+- platform: universal
+  name: Living Room PlayStation 5
+  state_template: "{{ states('switch.living_room_playstation') }}"
+  commands:
+    turn_on:
+      service: switch.turn_on
+      target:
+        entity_id: switch.living_room_playstation
+    turn_off:
+      service: switch.turn_off
+      target:
+        entity_id: switch.living_room_playstation
+  device_class: receiver
+  unique_id: living_room_playstation

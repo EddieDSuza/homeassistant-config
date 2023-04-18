@@ -1,0 +1,24 @@
+- id: 'outside_bright'
+  name: Outside Bright
+  icon: fapro:day
+  entities:
+    light.outside:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'outside_dimmed'
+  name: Outside Dimmed
+  icon: fapro:night
+  entities:
+    light.outside:
+      state: 'on'
+      brightness: 102
+      color_temp: 500
+
+- id: 'outside_off'
+  name: Outside Off
+  icon: mdi:power-standby
+  entities:
+    light.outside:
+      state: 'off'

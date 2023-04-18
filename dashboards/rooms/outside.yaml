@@ -1,0 +1,32 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'outside'
+    name: 'Outside'
+    status: [
+      {'name': 'Locks', 'entity': 'lock.all'},
+      {'name': 'Windows', 'entity': 'binary_sensor.windows'},
+      {'name': 'Doors', 'entity': 'binary_sensor.doors'},
+      {'name': 'Gardena Sileno', 'entity': 'vacuum.gardena_sileno'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.outside'},
+      {'name': 'Light', 'entity': 'light.outside'},
+      {'name': 'Temperature', 'entity': 'sensor.driveway_temperature'},
+      {'name': 'Illuminance', 'entity': 'sensor.driveway_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.outside'},
+    ]
+    scenes: [
+      'bright',
+      'dimmed',
+      'off'
+    ]
+    custom_lights: [
+        {'name': 'Front', 'id': 'front' },
+        {'name': 'Driveway', 'id': 'driveway' },
+        {'name': 'Garden', 'id': 'garden' },
+      ]
+    devices: [
+      {'name': 'Front Door Lock', 'entity': 'lock.front', 'action': 'more-info'},
+      {'name': 'Driveway Door Lock', 'entity': 'lock.driveway', 'action': 'more-info'},
+      {'name': 'Gardena Sileno', 'entity': 'vacuum.gardena_sileno'}
+    ]

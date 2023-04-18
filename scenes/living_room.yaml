@@ -1,0 +1,116 @@
+- id: 'living_room_morning'
+  name: Living Room Morning
+  icon: fapro:morning
+  entities:
+    light.living_room:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'living_room_day'
+  name: Living Room Day
+  icon: fapro:day
+  entities:
+    light.living_room:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'living_room_evening'
+  name: Living Room Evening
+  icon: fapro:evening
+  entities:
+    light.living_room_main:
+      state: 'off'
+    light.living_room_ambient:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'living_room_night'
+  name: Living Room Night
+  icon: fapro:night
+  entities:
+    light.living_room_main:
+      state: 'off'
+    light.living_room_ambient:
+      state: 'on'
+      brightness: 2
+      color_temp: 500
+
+- id: 'living_room_off'
+  name: Living Room Off
+  icon: mdi:power-standby
+  entities:
+    light.living_room:
+      state: 'off'
+
+- id: 'living_room_movies'
+  name: Living Room Movies
+  icon: mdi:movie-open
+  entities:
+    light.living_room_main:
+      state: 'off'
+    light.living_room_ambient_1:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 255
+        - 43
+        - 128
+    light.living_room_ambient_2:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 78
+        - 77
+        - 255
+    light.living_room_ambient_3:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 78
+        - 77
+        - 255
+    light.living_room_ambient_4:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 255
+        - 43
+        - 128
+
+- id: 'living_room_games'
+  name: Living Room Games
+  icon: mdi:sony-playstation
+  entities:
+    light.living_room_main:
+      state: 'off'
+    light.living_room_ambient_1:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 0
+        - 255
+        - 191
+    light.living_room_ambient_2:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 130
+        - 16
+        - 255
+    light.living_room_ambient_3:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 130
+        - 16
+        - 255
+    light.living_room_ambient_4:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 0
+        - 255
+        - 191

@@ -1,0 +1,29 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'en_suite'
+    name: 'En-Suite'
+    status: [
+      {'name': 'Window', 'entity': 'binary_sensor.en_suite_window'},
+      {'name': 'Climate', 'entity': 'climate.en_suite'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.en_suite'},
+      {'name': 'Light', 'entity': 'light.en_suite'},
+      {'name': 'Fan', 'entity': 'fan.en_suite'},
+      {'name': 'Temperature', 'entity': 'sensor.en_suite_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.en_suite_humidity'},
+      {'name': 'Illuminance', 'entity': 'sensor.en_suite_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.en_suite'},
+    ]
+    scenes: [
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    lights: [
+      {'name': 'Main Light', 'id': 'main'},
+      {'name': 'Shower Light', 'id': 'shower', 'large': true}
+    ]
+    show_climate: true

@@ -1,0 +1,69 @@
+- id: 'outside_lights'
+  alias: Outside Lights
+  trigger:
+    - platform: sun
+      event: sunset
+    - platform: sun
+      event: sunrise
+  action:
+    - choose:
+      - conditions:
+          - condition: sun
+            after: sunset
+        sequence:
+          - scene: scene.outside_dimmed
+      - conditions:
+          - condition: sun
+            after: sunrise
+            before: sunset
+        sequence:
+          - scene: scene.outside_off
+  mode: single
+
+- id: 'outside_presence'
+  alias: Outside Presence
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id: binary_sensor.outside
+  condition:
+    - condition: or
+      conditions:
+        - condition: sun
+          after: sunset
+        - condition: sun
+          before: sunrise
+    - condition: state
+      entity_id: input_boolean.outside
+      state: 'off'
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.outside
+              state: 'on'
+          sequence:
+            - scene: scene.outside_bright
+        - conditions:
+            - condition: state
+              entity_id: binary_sensor.outside
+              state: 'off'
+          sequence:
+            - delay: 30
+            - scene: scene.outside_dimmed
+
+# - id: 'outside_gardena_error_notification'
+#   alias: Gardena Sileno error notification
+#   mode: restart
+#   trigger:
+#     - platform: state
+#       entity_id: vacuum.sileno
+#       to: 'error'
+#   action:
+#     - service: notify.mobile
+#       data:
+#         title: "Gardena Sileno"
+#         message: Error occured. Check out Gardena Sileno for more information.
+#         data:
+#           push:
+#             interruption-level: 'time-sensitive'

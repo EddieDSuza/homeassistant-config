@@ -1,0 +1,44 @@
+# lovelace_gen
+
+type: vertical-stack
+cards:
+
+  {% if ((devices | length) == 0) %}
+  []
+  {% else %}
+
+  - type: custom:button-card
+    name: {{ section | default('Devices') }}
+    template: 
+      - subheader
+    {% if navigate is defined %}
+      - navigate
+    tap_action:
+      navigation_path: {{ navigate }}
+    {% endif %}
+
+  - type: custom:layout-card
+    layout_type: custom:grid-layout
+    layout:
+      grid-template-columns: {{ columns | default('1fr 1fr 1fr') }}
+      grid-template-rows: masonry
+      mediaquery:
+        "(max-width: 600px)":
+          grid-template-columns: 1fr 1fr
+    cards:
+
+      {% macro tile(device) -%}
+      - type: custom:button-card
+        entity: {{device['entity']}}
+        name: {{device['name']}}
+        template: 
+          - {{'tile_large' if device['large'] else 'tile'}}
+        tap_action:
+          action: {{device['action'] if (device['action']) else 'toggle'}}
+      {%- endmacro %}
+
+      {% for device in devices %}
+      {{ tile(device) }}
+      {% endfor %}
+
+  {% endif %}

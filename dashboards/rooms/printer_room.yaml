@@ -1,0 +1,41 @@
+# lovelace_gen
+
+type: vertical-stack
+cards:
+  - !include
+      - ../components/room.yaml
+      - room: 'printer_room'
+        name: 'Printer Room'
+        status: [
+          {'name': 'State', 'entity': 'sensor.printer_room_3d_printer_state'},
+          {'name': 'Job completion', 'entity': 'sensor.printer_room_3d_printer_job_percentage'},
+          {'name': 'Start Time', 'entity': 'sensor.printer_room_3d_printer_start_time'},
+          {'name': 'Finish Time', 'entity': 'sensor.printer_room_3d_printer_estimated_finish_time'},
+          {'name': 'Target Bed Temp', 'entity': 'sensor.printer_room_3d_printer_target_bed_temperature'},
+          {'name': 'Current Bed Temp', 'entity': 'sensor.printer_room_3d_printer_current_bed_temperature'},
+          {'name': 'Target Nozzle Temp', 'entity': 'sensor.printer_room_3d_printer_target_nozzle_temperature'},
+          {'name': 'Current Nozzle Temp', 'entity': 'sensor.printer_room_3d_printer_current_nozzle_temperature'},
+          {'name': 'Printer Error', 'entity': 'binary_sensor.printer_room_3d_printer_error'},
+          {'name': 'Printer', 'entity': 'binary_sensor.printer_room_3d_printer_printing'},
+          {'name': 'Door', 'entity': 'binary_sensor.printer_room_door'},
+          {'name': 'Manual Control', 'entity': 'input_boolean.printer_room'},
+          {'name': 'Light', 'entity': 'light.printer_room'},
+        ]
+        scenes: [
+          'day',
+          'off'
+        ]
+        devices: [
+          {'name': 'Resume', 'entity': 'button.printer_room_3d_printer_resume'},
+          {'name': 'Stop', 'entity': 'button.printer_room_3d_printer_stop', 'large': true},
+          {'name': 'Pause', 'entity': 'button.printer_room_3d_printer_pause'}
+        ]
+
+  - type: custom:button-card
+    template: subheader
+    name: Preview
+  - show_state: true
+    show_name: true
+    camera_view: auto
+    type: picture-entity
+    entity: camera.printer_room_3d_printer

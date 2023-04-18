@@ -1,0 +1,73 @@
+- id: "kitchen_presence"
+  alias: Kitchen Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: kitchen
+      delay: 120
+
+- id: "kitchen_remote"
+  alias: Kitchen Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: kitchen
+      remote: sensor.kitchen_remote
+      bright_scene: scene.kitchen_cooking
+      button_four_long_action:
+        - service: scene.turn_on
+          data:
+            transition: 1
+          target:
+            entity_id:
+              - scene.kitchen_off
+              - scene.dining_room_off
+        - service: input_boolean.turn_off
+          target:
+            entity_id: 
+              - input_boolean.kitchen
+              - input_boolean.dining_room
+
+
+- id: "kitchen_activity"
+  alias: Kitchen Activity
+  use_blueprint:
+    path: activity.yaml
+    input:
+      room: kitchen
+      activity_scene: scene.kitchen_cooking
+      activity_sensor:
+        - binary_sensor.kitchen_cabinet_door
+        - binary_sensor.kitchen_fridge
+        - binary_sensor.kitchen_owen_door
+        - binary_sensor.kitchen_microwave_door
+
+- id: 'kitchen_smart_garden'
+  alias: Kitchen Smart Garden
+  mode: single
+  trigger:
+    - platform: time
+      at: '05:00:00'
+      id: start
+    - platform: time
+      at: '21:00:00'
+      id: end
+  action:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: start
+            - condition: state
+              entity_id: input_boolean.kitchen_garden_state
+              state: 'on'
+          sequence:
+              - service: switch.turn_on
+                target:
+                  entity_id: switch.kitchen_smart_garden
+        - conditions:
+            - condition: trigger
+              id: end
+          sequence:
+              - service: switch.turn_off
+                target:
+                  entity_id: switch.kitchen_smart_garden

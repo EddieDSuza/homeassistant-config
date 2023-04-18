@@ -1,0 +1,24 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'toilet'
+    name: 'Toilet'
+    status: [
+      {'name': 'Window', 'entity': 'binary_sensor.toilet_window'},
+      {'name': 'Climate', 'entity': 'climate.toilet'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.toilet'},
+      {'name': 'Light', 'entity': 'light.toilet'},
+      {'name': 'Temperature', 'entity': 'sensor.toilet_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.toilet_humidity'},
+      {'name': 'Illuminance', 'entity': 'sensor.toilet_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.toilet'},
+    ]
+    scenes: [
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    show_climate: true

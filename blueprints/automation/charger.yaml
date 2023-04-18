@@ -1,0 +1,101 @@
+blueprint:
+  name: Room Automation - Charger
+  domain: automation
+  input:
+    battery:
+      name: Battery
+      default: []
+      selector:
+        entity:
+          domain: sensor
+
+    switch:
+      name: Switch
+      selector:
+        entity:
+          domain: switch
+
+    person:
+      name: Person
+      selector:
+        entity:
+          domain: person
+    
+    time_only:
+      name: Time only
+      default: false
+      selector:
+        boolean: {}
+
+    on_time:
+      name: On Time
+      default: "02:00:00"
+      selector:
+        time:
+
+    off_time:
+      name: Off Time
+      default: "05:00:00"
+      selector:
+        time:
+
+mode: restart
+
+trigger:
+  - platform: numeric_state
+    entity_id: !input battery
+    below: 30
+    id: battery_low
+  - platform: numeric_state
+    entity_id: !input battery
+    above: 99
+    id: battery_full
+  - platform: time
+    at: !input on_time
+    id: time_on
+  - platform: time
+    at: !input off_time
+    id: time_off
+
+variables:
+  time_only: !input time_only
+
+condition:
+  - condition: state
+    entity_id: !input person
+    state: home
+
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: battery_low
+          - "{{ not time_only }}"
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id: !input switch
+
+      - conditions:
+          - condition: trigger
+            id: time_on
+        sequence:
+          - service: switch.turn_on
+            target:
+              entity_id: !input switch
+
+      - conditions:
+          - condition: trigger
+            id: time_off
+        sequence:
+          - service: switch.turn_off
+            target:
+              entity_id: !input switch
+
+      - conditions:
+          - condition: trigger
+            id: battery_full
+        sequence:
+          - service: switch.turn_off
+            target:
+              entity_id: !input switch

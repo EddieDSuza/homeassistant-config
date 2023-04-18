@@ -1,0 +1,250 @@
+blueprint:
+  name: Room Automation - Remote
+  domain: automation
+  input:
+    room:
+      name: Room
+      selector:
+        area:
+
+    remote:
+      name: Remote
+      default: []
+      selector:
+        entity:
+          domain: sensor
+
+    bright_scene:
+      name: Bright Scene
+      default: []
+      selector:
+        entity:
+          domain: scene
+
+    # Cover custom positions
+    cover_position_button_2_hold:
+      name: Cover Open Position
+      default: 60
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: "%"
+
+    cover_position_button_3_hold:
+      name: Cover Close Position
+      default: 30
+      selector:
+        number:
+          min: 0
+          max: 100
+          unit_of_measurement: "%"
+
+    # Custom remote actions
+    button_two_short_action:
+      name: Button 2 - Custom action
+      default: []
+      selector:
+        action:
+
+    button_three_short_action:
+      name: Button 3 - Custom action
+      default: []
+      selector:
+        action:
+
+    button_four_long_action:
+      name: Button 4 - Long press custom action
+      default: []
+      selector:
+        action:
+
+mode: queued
+
+
+trigger:
+  - platform: state
+    entity_id: !input remote
+    id: on_press
+    to: on_press_release
+  - platform: state
+    entity_id: !input remote
+    id: on_hold
+    to: on_hold
+  - platform: state
+    entity_id: !input remote
+    id: up_press
+    to: up_press_release
+  - platform: state
+    entity_id: !input remote
+    id: up_hold
+    to: up_hold
+  - platform: state
+    entity_id: !input remote
+    id: down_press
+    to: down_press_release
+  - platform: state
+    entity_id: !input remote
+    id: down_hold
+    to: down_hold
+  - platform: state
+    entity_id: !input remote
+    id: off_press
+    to: off_press_release
+  - platform: state
+    entity_id: !input remote
+    id: off_hold
+    to: off_hold
+
+# Mini remote
+  - platform: state
+    entity_id: !input remote
+    id: on_press
+    to: 'on'
+  - platform: state
+    entity_id: !input remote
+    id: off_press
+    to: 'off'
+  - platform: state
+    entity_id: !input remote
+    id: up_press
+    to: 'brightness_move_up'
+  - platform: state
+    entity_id: !input remote
+    id: down_press
+    to: 'brightness_move_down'
+
+variables:
+  room: !input room
+
+  manual_switch: 'input_boolean.{{ room }}'
+
+  custom_bright_scene: !input bright_scene
+  bright_scene: >
+    {% if custom_bright_scene %}
+    {{ custom_bright_scene }}
+    {% else %}
+    scene.{{ room }}_day
+    {% endif %}
+  dimmed_scene: 'scene.{{ room }}_night'
+  off_scene: 'scene.{{ room }}_off'
+
+  cover: 'cover.{{ room }}'
+
+  button_two_short_action: !input button_two_short_action
+  button_three_short_action: !input button_three_short_action
+
+# condition: "{{ area_name(trigger.event.data.device_id) | lower | replace(' ', '_') | replace('-', '_') == room }}"
+
+action:
+
+
+
+  # - variables:
+  #     command: "{{ trigger.event.data.command }}"
+
+  - choose:
+    # Button 1 Short Release
+    - conditions: 
+        - condition: trigger
+          id: on_press
+      sequence:
+        - service: scene.turn_on
+          target:
+            entity_id: "{{ bright_scene }}"
+          data:
+            transition: 1
+        - service: input_boolean.turn_on
+          target:
+            entity_id: "{{ manual_switch }}"
+
+    # Button 1 Long Release
+    - conditions: 
+        - condition: trigger
+          id: on_hold
+      sequence:
+        - service: scene.turn_on
+          target:
+            entity_id: "{{ dimmed_scene }}"
+          data:
+            transition: 1
+        - service: input_boolean.turn_on
+          target:
+            entity_id: "{{ manual_switch }}"
+
+    # Button 2 Short Release - Cover
+    - conditions:
+        - condition: trigger
+          id: up_press
+        - "{{ states(cover) != 'unknown' }}"
+        - "{{ button_two_short_action == [] }}"
+      sequence:
+        - service: cover.open_cover
+          target:
+            entity_id: "{{ cover }}"
+
+    # Button 2 Short Release - Custom action
+    - conditions: 
+        - condition: trigger
+          id: up_press
+        - "{{ button_two_short_action != [] }}"
+      sequence: !input button_two_short_action
+
+    # Button 2 Long Release - Cover
+    - conditions: 
+        - condition: trigger
+          id: up_hold
+        - "{{ states(cover) != 'unknown' }}"
+        - "{{ button_two_short_action == [] }}"
+      sequence:
+        - service: cover.set_cover_position
+          target:
+            entity_id: "{{ cover }}"
+          data:
+            position: !input cover_position_button_2_hold
+
+    # Button 3 Short Release - Cover
+    - conditions: 
+        - condition: trigger
+          id: down_press
+        - "{{ states(cover) != 'unknown' }}"
+        - "{{ button_three_short_action == [] }}"
+      sequence:
+        - service: cover.close_cover
+          target:
+            entity_id: "{{ cover }}"
+
+    # Button 3 Short Release - Custom action
+    - conditions: 
+        - condition: trigger
+          id: down_press
+        - "{{ button_three_short_action != [] }}"
+      sequence: !input button_three_short_action
+
+    # Button 3 Long Release - Cover
+    - conditions: 
+        - condition: trigger
+          id: down_hold
+        - "{{ states(cover) != 'unknown' }}"
+        - "{{ button_three_short_action == [] }}"
+      sequence:
+        - service: cover.set_cover_position
+          target:
+            entity_id: "{{ cover }}"
+          data:
+            position: !input cover_position_button_3_hold
+
+    # Button 4 Short Release
+    - conditions: 
+        - condition: trigger
+          id: off_press
+      sequence:
+        - service: script.light_off
+          data:
+            room: "{{ room }}"
+
+    # Button 4 Long Release
+    - conditions: 
+        - condition: trigger
+          id: off_hold
+      sequence: !input button_four_long_action

@@ -1,0 +1,12 @@
+dashboard-home:
+  mode: yaml
+  title: Home
+  icon: fapro:home
+  show_in_sidebar: true
+  filename: dashboards/dashboards/home.yaml
+dashboard-tablet:
+  mode: yaml
+  title: Tablet Dashboard
+  icon: fapro:ipad.landscape
+  show_in_sidebar: true
+  filename: dashboards/dashboards/tablet.yaml

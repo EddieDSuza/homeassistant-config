@@ -1,0 +1,45 @@
+- id: "studio_presence"
+  alias: Studio Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: studio
+      delay: 90
+
+- id: "studio_remote"
+  alias: Studio Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: studio
+      remote: 
+        - sensor.studio_remote
+        - sensor.studio_remote_2
+
+- id: "studio_activity"
+  alias: Studio Activity
+  use_blueprint:
+    path: activity.yaml
+    input:
+      room: studio
+      activity_sensor: binary_sensor.studio_chair
+      activity_scene: scene.studio_work
+
+- id: "studio_tv"
+  alias: Studio TV
+  use_blueprint:
+    path: tv.yaml
+    input:
+      room: studio
+      movies_scene: scene.studio_movies
+      playstation_scene: scene.studio_games_playstation
+      xbox_scene: scene.studio_games_xbox
+      tv: media_player.studio_tv
+      playstation: media_player.studio_playstation
+
+- id: "studio_tv_blinds"
+  alias: Studio TV and Blinds
+  use_blueprint:
+    path: tv_blinds.yaml
+    input:
+      room: studio

@@ -1,0 +1,32 @@
+# lovelace_gen
+type: vertical-stack
+cards:
+  {% if ((media_players | length) == 0) %}
+  []
+  {% else %}
+  - type: custom:button-card
+    template: subheader
+    name: Entertainment
+  - type: custom:layout-card
+    layout_type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: masonry
+      mediaquery:
+        "(max-width: 600px)":
+          grid-template-columns: 1fr 1fr
+    cards:
+      {% macro card(media_player) -%}
+      - type: custom:button-card
+        entity: media_player.{{room}}_{{media_player['id']}}
+        name: {{media_player['name']}}
+        template:
+          - {{'tile_large' if media_player['large'] else 'tile'}}
+          - tap_info
+      {%- endmacro %}
+
+
+      {% for media_player in media_players %}
+      {{ card(media_player) }}
+      {% endfor %}
+  {% endif %}

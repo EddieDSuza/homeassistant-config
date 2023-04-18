@@ -1,0 +1,82 @@
+tile_scene:
+  template: tile
+  triggers_update: all
+  variables:
+    room: ''
+    id: ''
+  name: |
+    [[[
+      let names = {
+        morning: 'Morning',
+        day: 'Day',
+        evening: 'Evening',
+        night: 'Night',
+        false: "Off",
+        bright: 'Bright',
+        dimmed: 'Dimmed',
+        work: 'Work',
+        movies: 'Movies',
+        games: 'Games',
+        games_playstation: 'Games PlayStation',
+        games_xbox: 'Games Xbox',
+        shower: 'Shower',
+        bathtub: 'Bath',
+        cooking: 'Cooking',
+        eating: 'Eating',
+      }
+      return names[variables.id] + '‎';
+    ]]]
+  show_state: false
+  tap_action:
+    action: call-service
+    service: script.scene_set
+    service_data:
+      room: "[[[ return variables.room; ]]]"
+      scene: "[[[ return variables.id; ]]]"
+  styles:
+    grid:
+      - grid-template-areas: '"i n"'
+      - grid-template-rows: auto
+      - grid-template-columns: 66px max-content
+    card:
+      - background-color: rgba(29,29,29,0.5)
+    icon:
+      - border-radius: 0%
+      - color: |
+          [[[
+            let colors = {
+                morning: 'amber',
+                bright: 'amber',
+                day: 'white',
+                evening: 'brown',
+                night: 'indigo',
+                dimmed: 'indigo',
+                false: 'grey',
+                work: 'yellow',
+                movies: 'pink',
+                games: 'light-blue',
+                games_playstation: 'light-blue',
+                games_xbox: 'green',
+                shower: 'teal',
+                bathtub: 'cyan',
+                cooking: 'light-green',
+                eating: 'lime'
+            }
+            return 'rgba(var(--mush-rgb-' + colors[variables.id] +'), 1)';
+          ]]]
+      - background-color: rgba(0,0,0,0)
+    name:
+      - align-self: center
+      - color: var(--primary-text-color)
+
+  state:
+    - operator: template
+      value: |
+        [[[ 
+          return entity.entity_id == states['sensor.' + variables.room + '_active_scene'].state && states['input_boolean.' + variables.room].state == 'on';
+        ]]]
+      styles:
+        card:
+          - background-color: rgba(240,240,240,1)
+        name:
+          - color: var(--primary-background-color)

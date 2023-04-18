@@ -1,0 +1,14 @@
+- id: "hallway_presence"
+  alias: Hallway Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: hallway
+
+- id: "hallway_remote"
+  alias: Hallway Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: hallway
+      remote: sensor.hallway_remote

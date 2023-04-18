@@ -1,0 +1,47 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'studio'
+    name: 'Studio'
+    status: [
+      {'name': 'Window', 'entity': 'binary_sensor.studio_window'},
+      {'name': 'Climate', 'entity': 'climate.studio'},
+      {'name': 'HomePod', 'entity': 'media_player.studio_homepod'},
+      {'name': 'TV', 'entity': 'media_player.studio_tv'},
+      {'name': 'PlayStation', 'entity': 'media_player.studio_playstation'},
+      {'name': 'Xbox', 'entity': 'media_player.studio_xbox'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.studio'},
+      {'name': 'Light', 'entity': 'light.studio'},
+      {'name': 'Blinds', 'entity': 'cover.studio'},
+      {'name': 'Temperature', 'entity': 'sensor.studio_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.studio_humidity'},
+      {'name': 'Illuminance', 'entity': 'sensor.studio_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.studio'},
+    ]
+    scenes: [
+      'work',
+      'movies',
+      'games_playstation',
+      'games_xbox',
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    lights: [
+      {'name': 'Main Light', 'id': 'main'},
+      {'name': 'Entertainment Light', 'id': 'entertainment'},
+      {'name': 'Desk Light', 'id': 'desk'},
+      {'name': 'Desk Lamp', 'id': 'desk_lamp', 'large': true},
+      {'name': 'Monitor Light', 'id': 'monitor', 'large': true}
+    ]
+    media_players: [
+      {'name': 'HomePod', 'id': 'homepod', 'on_off': false, 'volume_controls': true, 'media_controls': true},
+      {'name': 'TV', 'id': 'tv', 'on_off': true, 'volume_controls': true, 'media_controls': false, 'large': true},
+      {'name': 'PlayStation 5', 'id': 'playstation', 'on_off': true, 'volume_controls': false, 'media_controls': false, 'large': true},
+      {'name': 'Xbox Series S', 'id': 'xbox', 'on_off': true, 'volume_controls': false, 'media_controls': false}
+    ]
+    show_cover: true
+    show_climate: true

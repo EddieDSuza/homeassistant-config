@@ -1,0 +1,42 @@
+- id: 'utility_room_morning'
+  name: Utility Room Morning
+  icon: fapro:morning
+  entities:
+    light.utility_room:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'utility_room_day'
+  name: Utility Room Day
+  icon: fapro:day
+  entities:
+    light.utility_room:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'utility_room_evening'
+  name: Utility Room Evening
+  icon: fapro:evening
+  entities:
+    light.utility_room:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'utility_room_night'
+  name: Utility Room Night
+  icon: fapro:night
+  entities:
+    light.utility_room:
+      state: 'on'
+      brightness: 2
+      color_temp: 500
+
+- id: 'utility_room_off'
+  name: Utility Room Off
+  icon: mdi:power-standby
+  entities:
+    light.utility_room:
+      state: 'off'

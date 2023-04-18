@@ -1,0 +1,16 @@
+- id: "office_presence"
+  alias: Office Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: office
+      delay: 90
+
+- id: "office_remote"
+  alias: Office Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: office
+      remote: sensor.office_remote
+      cover_position_button_2_hold: 50

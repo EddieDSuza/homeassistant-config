@@ -1,0 +1,17 @@
+- name: mobile
+  platform: group
+  services:
+    - service: maciej
+    - service: dominika
+
+- name: maciej
+  platform: group
+  services:
+    - service: mobile_app_iphone_maciej
+    - service: mobile_app_ipad_maciej
+    - service: mobile_app_macbook_maciej
+
+- name: dominika
+  platform: group
+  services:
+    - service: mobile_app_iphone_dominika

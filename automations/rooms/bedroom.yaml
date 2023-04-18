@@ -1,0 +1,142 @@
+- id: "bedroom_presence"
+  alias: Bedroom Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: bedroom
+      force_dimmed: "{{ states('sensor.bedroom_bed') > '0' }}"
+
+- id: "bedroom_remote"
+  alias: Bedroom Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: bedroom
+      remote: 
+        - sensor.bedroom_remote_1
+        - sensor.bedroom_remote_2
+        - sensor.bedroom_remote_3
+
+- id: "bedroom_tv"
+  alias: Bedroom TV
+  use_blueprint:
+    path: tv.yaml
+    input:
+      room: bedroom
+      movies_scene: scene.bedroom_movies
+      tv: media_player.bedroom_tv
+      custom_off_action:
+        - if:
+            - condition: state
+              entity_id: binary_sensor.bedroom_bed
+              state: "on"
+          then:
+            - service: scene.turn_on
+              data:
+                transition: 1
+              target:
+                entity_id: scene.bedroom_night
+          else:
+            - service: script.light_on
+              data:
+                room: dining_room
+
+- id: "bedroom_charger_dominika"
+  alias: Bedroom Charger - Dominika
+  use_blueprint:
+    path: charger.yaml
+    input:
+      battery: sensor.iphone_dominika_battery_level
+      switch: switch.bedroom_charger_1
+      person: person.dominika_matuszewska
+      time_only: true
+      on_time: "02:00:00"
+      off_time: "05:00:00"
+
+- id: "bedroom_charger_iphone_maciej"
+  alias: Bedroom Charger - iPhone Maciej
+  use_blueprint:
+    path: charger.yaml
+    input:
+      battery: sensor.iphone_maciej_battery_level
+      switch: switch.bedroom_charger_iphone
+      person: person.maciej_matuszewski
+      on_time: "06:00:00"
+      off_time: "09:00:00"
+
+- id: "bedroom_charger_apple_watch_maciej"
+  alias: Bedroom Charger - Apple Watch Maciej
+  use_blueprint:
+    path: charger.yaml
+    input:
+      switch: switch.bedroom_charger_watch
+      person: person.maciej_matuszewski
+      on_time: "06:00:00"
+      off_time: "07:00:00"
+
+- id: "bedroom_charger_ipad"
+  alias: Bedroom Charger - iPad
+  use_blueprint:
+    path: charger.yaml
+    input:
+      battery: sensor.ipad_pro_battery_level
+      switch: switch.bedroom_charger_ipad
+      person: person.maciej_matuszewski
+      on_time: "03:00:00"
+      off_time: "07:00:00"
+
+- id: 'bedroom_cover'
+  alias: Bedroom Cover
+  mode: restart
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.en_suite_shower
+        - binary_sensor.bedroom_bed
+      to: "on"
+      for:
+        hours: 0
+        minutes: 3
+        seconds: 0
+      id: cover_close
+    - platform: state
+      entity_id: media_player.bedroom_tv
+      to: "on"
+      id: cover_close
+    - platform: state
+      entity_id:
+        - binary_sensor.en_suite_shower
+        - binary_sensor.bedroom_bed
+        - media_player.bedroom_tv
+      to: "off"
+      id: cover_open
+  condition:
+    - condition: sun
+      after: sunrise
+      before: sunset
+  action:
+    - choose:
+        - conditions:
+            - condition: trigger
+              id: cover_close
+          sequence:
+            - service: cover.close_cover
+              target:
+                entity_id: cover.bedroom
+        - conditions:
+            - condition: trigger
+              id: cover_open
+          sequence:
+            - delay: 300
+            - condition: state
+              entity_id: binary_sensor.bedroom_bed
+              state: "off"
+            - condition: state
+              entity_id: binary_sensor.en_suite_shower
+              state: "off"
+            - condition: state
+              entity_id: media_player.bedroom_tv
+              state: "off"
+            - service: cover.open_cover
+              target:
+                entity_id: cover.bedroom

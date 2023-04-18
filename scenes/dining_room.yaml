@@ -1,0 +1,95 @@
+- id: 'dining_room_morning'
+  name: Dining Room Morning
+  icon: fapro:morning
+  entities:
+    light.dining_room_main:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+    light.dining_room_table:
+      state: 'off'
+    light.dining_room_entrance:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'dining_room_day'
+  name: Dining Room Day
+  icon: fapro:day
+  entities:
+    light.dining_room_main:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+    light.dining_room_table:
+      state: 'off'
+    light.dining_room_entrance:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'dining_room_evening'
+  name: Dining Room Evening
+  icon: fapro:evening
+  entities:
+    light.dining_room_main:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+    light.dining_room_table:
+      state: 'off'
+    light.dining_room_entrance:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'dining_room_night'
+  name: Dining Room Night
+  icon: fapro:night
+  entities:
+    light.dining_room_main:
+      state: 'on'
+      brightness: 77
+      color_temp: 500
+    light.dining_room_table:
+      state: 'off'
+    light.dining_room_entrance:
+      state: 'off'
+
+- id: 'dining_room_off'
+  name: Dining Room Off
+  icon: mdi:power-standby
+  entities:
+    light.dining_room:
+      state: 'off'
+
+- id: 'dining_room_eating'
+  name: Dining Room Eating
+  icon: mdi:food
+  entities:
+    light.dining_room_main:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+    light.dining_room_table:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+    light.dining_room_entrance:
+      state: 'off'
+
+- id: 'dining_room_movies'
+  name: Dining Room Movies
+  icon: mdi:movie-open
+  entities:
+    light.dining_room_main:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 2
+        - 191
+        - 255
+    light.dining_room_table:
+      state: 'off'
+    light.dining_room_entrance:
+      state: 'off'

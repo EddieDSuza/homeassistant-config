@@ -1,0 +1,17 @@
+tile_large:
+  template: tile
+  styles:
+    grid:
+      - grid-template-areas: '"i ." ". ." "l l" "n n" "s s"'
+      - grid-template-rows: 66px auto min-content min-content min-content
+      - grid-template-columns: 66px auto
+    card:
+      - height: 152px
+    icon:
+      - padding: 12px
+    label:
+      - padding: 2px 12px 2px
+    name:
+      - padding: 2px 12px 2px
+    state:
+      - padding: 2px 12px 20px

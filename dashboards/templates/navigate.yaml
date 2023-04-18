@@ -1,0 +1,18 @@
+navigate:
+  icon: mdi:chevron-right
+  styles:
+    grid:
+      - grid-template-areas: '"n i"'
+      - grid-template-columns: min-content 2.2em
+      - grid-template-rows: min-content
+    icon:
+      - justify-self: start
+      - align-self: center
+      - font-weight: bolder
+      - height: 2em
+      - width: 2em
+      - filter: opacity(40%)
+      - border-radius: 50%
+      - padding: 0.1em
+  tap_action:
+    action: navigate

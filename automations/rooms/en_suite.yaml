@@ -1,0 +1,38 @@
+- id: "en_suite_presence"
+  alias: En-Suite Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: en_suite
+      delay: 120
+
+- id: "en_suite_remote"
+  alias: En-Suite Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: en_suite
+      remote: sensor.en_suite_remote
+      button_two_short_action:
+        - service: scene.turn_on
+          target:
+            entity_id: "scene.en_suite_shower"
+          data:
+            transition: 1
+        - service: input_boolean.turn_on
+          target:
+            entity_id: "input_boolean.en_suite"
+
+- id: "en_suite_fan"
+  alias: En-Suite Fan
+  use_blueprint:
+    path: fan.yaml
+    input:
+      room: en_suite
+
+- id: "en_suite_shower"
+  alias: En-Suite Shower
+  use_blueprint:
+    path: shower.yaml
+    input:
+      room: en_suite

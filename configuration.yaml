@@ -1,0 +1,38 @@
+http:
+  server_port: 80
+
+default_config:
+fontawesome:
+lovelace_gen:
+wake_on_lan:
+
+frontend:
+  themes: !include_dir_merge_named themes
+
+tts:
+  - platform: google_translate
+
+automation: !include_dir_merge_list automations
+script: !include_dir_merge_named scripts
+scene: !include_dir_merge_list scenes
+
+panel_custom: !include configuration/panel_custom.yaml
+calendar: !include configuration/calendar.yaml
+sensor: !include configuration/sensors.yaml
+notify: !include configuration/notify.yaml
+template: !include configuration/templates.yaml
+alarm_control_panel: !include configuration/alarm.yaml
+media_player: !include configuration/media_players.yaml
+group: !include configuration/groups.yaml
+
+lovelace:
+  mode: storage
+  dashboards: !include configuration/dashboards.yaml
+
+proximity:
+  home:
+    devices:
+      - person.maciej_matuszewski
+      - person.dominika_matuszewska
+    tolerance: 50
+    unit_of_measurement: mi

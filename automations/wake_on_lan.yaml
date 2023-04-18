@@ -1,0 +1,40 @@
+- id: 'wake_on_lan'
+  alias: "TV Wake On Lan"
+  mode: single
+  trigger:
+    - platform: webostv.turn_on
+      id: living_room
+      entity_id: media_player.living_room_tv
+
+    - platform: webostv.turn_on
+      id: studio
+      entity_id: media_player.studio_tv
+
+    - platform: webostv.turn_on
+      id: bedroom
+      entity_id: media_player.bedroom_tv
+  action:
+    - choose:
+      - conditions:
+        - condition: trigger
+          id: living_room
+        sequence:
+          - service: wake_on_lan.send_magic_packet
+            data:
+              mac: "b0:37:95:63:e7:42"
+
+      - conditions:
+        - condition: trigger
+          id: studio
+        sequence:
+          - service: wake_on_lan.send_magic_packet
+            data:
+              mac: "58:fd:b1:f6:30:07"
+
+      - conditions:
+        - condition: trigger
+          id: bedroom
+        sequence:
+          - service: wake_on_lan.send_magic_packet
+            data:
+              mac: "8c:19:b5:d6:a7:c2"

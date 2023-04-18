@@ -1,0 +1,35 @@
+# lovelace_gen
+type: vertical-stack
+cards:
+  - type: custom:button-card
+    template: subheader
+    name: Lights
+  - type: custom:layout-card
+    layout_type: custom:grid-layout
+    layout:
+      grid-template-columns: 1fr 1fr 1fr
+      grid-template-rows: masonry
+      mediaquery:
+        "(max-width: 600px)":
+          grid-template-columns: 1fr 1fr
+    cards:
+      {% macro tile(name, domain, id, large) -%}
+      - type: custom:button-card
+        entity: {{domain}}.{{id}}
+        name: {{name}}
+        template: {{'tile_large' if large else 'tile'}}
+      {%- endmacro %}
+
+
+      {{ tile('Light', 'light', room, true) }}
+
+
+      {% for item in lights %}
+      {{ tile(item['name'], 'light', room + '_' + item['id'], item['large']) }}
+      {% endfor %}
+
+      {% for item in custom_lights %}
+      {{ tile(item['name'], 'light',  item['id'], item['large']) }}
+      {% endfor %}
+
+      {{ tile('Manual Control', 'input_boolean', room) }}

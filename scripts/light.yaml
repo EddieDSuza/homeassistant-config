@@ -1,0 +1,66 @@
+light_on:
+  alias: Light On
+  mode: parallel
+  max: 20
+  sequence:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: input_boolean.night
+              state: 'on'
+          sequence:
+            - service: scene.turn_on
+              data:
+                transition: 1
+              target:
+                entity_id: scene.{{ room }}_night
+        - conditions:
+            - condition: sun
+              before: sunrise
+          sequence:
+            - service: scene.turn_on
+              data:
+                transition: 1
+              target:
+                entity_id: scene.{{ room }}_night
+        - conditions:
+            - condition: time
+              before: "11:00:00"
+          sequence:
+            - service: scene.turn_on
+              data:
+                transition: 1
+              target:
+                entity_id: scene.{{ room }}_morning
+        - conditions:
+            - condition: time
+              before: "21:00:00"
+          sequence:
+            - service: scene.turn_on
+              data:
+                transition: 1
+              target:
+                entity_id: scene.{{ room }}_day
+        - conditions:
+            - condition: time
+              after: "21:00:00"
+          sequence:
+            - service: scene.turn_on
+              data:
+                transition: 1
+              target:
+                entity_id: scene.{{ room }}_evening
+
+light_off:
+  alias: Light Off
+  mode: parallel
+  max: 20
+  sequence:
+    - service: scene.turn_on
+      data:
+        transition: 1
+      target:
+        entity_id: scene.{{ room }}_off
+    - service: input_boolean.turn_off
+      target:
+        entity_id: input_boolean.{{ room }}

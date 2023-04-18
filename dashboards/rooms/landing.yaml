@@ -1,0 +1,31 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - mode: {{ mode | default('details') }}
+    room: 'landing'
+    name: 'Landing'
+    glances: [
+      'light.landing',
+      'input_boolean.landing',
+      'climate.landing',
+      'binary_sensor.landing',
+    ]
+    status: [
+      {'name': 'Smoke', 'entity': 'binary_sensor.landing_smoke'},
+      {'name': 'Climate', 'entity': 'climate.landing'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.landing'},
+      {'name': 'Light', 'entity': 'light.landing'},
+      {'name': 'Temperature', 'entity': 'sensor.landing_temperature'},
+      {'name': 'Humidity', 'entity': 'sensor.landing_humidity'},
+      {'name': 'Illuminance', 'entity': 'sensor.landing_illuminance'},
+      {'name': 'Motion', 'entity': 'binary_sensor.landing'},
+    ]
+    scenes: [
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    show_climate: true

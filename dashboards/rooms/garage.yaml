@@ -1,0 +1,25 @@
+# lovelace_gen
+
+!include
+  - ../components/room.yaml
+  - room: 'garage'
+    name: 'Garage'
+    status: [
+      {'name': 'Door', 'entity': 'binary_sensor.garage_door'},
+      {'name': 'Manual Control', 'entity': 'input_boolean.garage'},
+      {'name': 'Light', 'entity': 'light.garage'},
+    ]
+    scenes: [
+      'morning',
+      'day',
+      'evening',
+      'night',
+      'off'
+    ]
+    lights: [
+      {'name': 'Main Light', 'id': 'main'},
+      {'name': 'Desk Light', 'id': 'desk'}
+    ]
+    devices: [
+      {'name': 'Door', 'entity': 'cover.garage', 'action': 'more-info'}
+    ]

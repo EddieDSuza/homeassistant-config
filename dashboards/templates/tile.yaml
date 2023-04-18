@@ -1,0 +1,156 @@
+tile:
+  show_label: false
+  show_state: true
+  variables:
+    color: |
+      [[[
+        let domain = entity.entity_id.split('.')[0];
+        let device_class = entity.attributes.device_class;
+        let state = (states[entity.entity_id].state);
+
+        let domain_colors = {
+          light: 'amber',
+          alarm_control_panel: 'teal',
+          cover: 'blue',
+          lock: 'teal',
+          input_boolean: 'green',
+          climate: 'orange',
+          media_player: 'indigo',
+          switch: 'lime',
+          sensor: 'deep-purple',
+          group: 'brown',
+          vacuum: 'cyan',
+        }
+
+        let class_colors = {
+          tv: 'indigo',
+          receiver: 'indigo',
+          speaker: 'indigo',
+
+          moisture: 'red',
+          smoke: 'red',
+          safety: 'red',
+          problem: 'red',
+
+          window: 'teal',
+          door: 'teal',
+          shade: 'blue',
+          garage_door: 'teal',
+          garage: 'teal',
+
+          motion: 'purple',
+          vibration: 'purple',
+
+          temperature: 'pink',
+          illuminance: 'pink',
+          humidity: 'pink',
+
+          power: 'lime',
+          outlet: 'lime',
+        }
+
+        var color;
+        color = class_colors[device_class];
+        if (color) { return color }
+        
+        color = domain_colors[domain];
+        if (color) { return color }
+
+        return 'grey';
+      ]]]
+  tap_action:
+    action: toggle
+    haptic: success
+  hold_action:
+    action: more-info
+    haptic: success
+  styles:
+    grid:
+      - grid-template-areas: '"i n" "i s"'
+      - grid-template-rows: auto auto
+      - grid-template-columns: 66px max-content
+    card:
+      - border-radius: 20px
+      - height: 70px
+      - background-color: rgba(240,240,240,1)
+      - '-webkit-backdrop-filter': blur(20px)
+      - padding: 0px
+    icon:
+      - width: 24px
+      - height: 24px
+      - padding: 12px
+      - margin: 0px
+      - border-radius: 50%
+      - color: rgba(240,240,240,1)
+      - background-color: |
+          [[[
+            return 'rgba(var(--mush-rgb-' + variables.color +'), 1)';
+          ]]]
+    name:
+      - color: var(--primary-background-color)
+      - justify-self: start
+      - align-self: end
+      - font-weight: 500
+      - font-size: 0.7em
+      - padding: 2px
+    state:
+      - color: var(--secondary-background-color)
+      - justify-self: start
+      - align-self: start
+      - font-size: 0.7em
+      - filter: opacity(80%)
+      - padding: 2px
+  state:
+    - operator: template
+      value: |
+        [[[ 
+          let state = (states[entity.entity_id].state);
+          let domain = entity.entity_id.split('.')[0];
+          if (domain == 'climate') {
+            return state == 'auto';
+          }
+
+          let off_states = ['off', 'closed', 'locked', 0, 'standby', 'paused', 'idle', 'docked', 'Ready', 'Operational', 'disarmed'];
+          return off_states.includes(state);
+        ]]]
+      styles:
+        card:
+          - background-color: rgba(29,29,29,0.7)
+        name:
+          - color: var(--primary-text-color)
+        label:
+          - color: var(--secondary-text-color)
+        state:
+          - color: var(--secondary-text-color)
+        icon:
+          - background-color: rgba(49,49,49,0.7)
+          - color: "[[[ return 'rgba(var(--mush-rgb-' + variables.color +'), 1)'; ]]]"
+
+    - operator: template
+      value: |
+        [[[ 
+          let state = (states[entity.entity_id].state);
+          var domain = entity.entity_id.split('.')[0];
+          let device = entity.attributes.device_class;
+
+          if (domain == 'climate' && state == 'off') {
+            return true;
+          }
+
+          if (domain == 'lock' && state == 'unlocked') {
+            return true;
+          }
+
+          if (device == 'garage' && state != 'closed') {
+            return true;
+          }
+
+          let invalid_states = ['unavailable', 'unknown', 'error', 'triggerd'];
+          let devices = ['moisture', 'smoke'];
+          return (invalid_states.includes(state) || devices.includes(device));
+        ]]]
+      styles:
+        name:
+          - color: rgba(var(--mush-rgb-red), 1)
+        icon:
+          - background-color: rgba(var(--mush-rgb-red), 1)

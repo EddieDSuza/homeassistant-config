@@ -1,0 +1,52 @@
+blueprint:
+  name: Room Automation - Activity
+  domain: automation
+  input:
+    room:
+      name: Room
+      selector:
+        area:
+
+mode: restart
+
+trigger_variables:
+  room: !input room
+  sensor: 'binary_sensor.{{room}}_shower'
+
+trigger:
+  - platform: template
+    id: sensor_on
+    value_template: >
+      {{ is_state(sensor, 'on') }}
+
+  - platform: template
+    id: sensor_off
+    value_template: >
+      {{ is_state(sensor, 'off') }}
+
+variables:
+  room: !input room
+  manual_switch: 'input_boolean.{{ room }}'
+
+condition:
+  - "{{ is_state(manual_switch, 'off') }}"
+
+action:
+  - choose:
+    - conditions:
+      - condition: trigger
+        id: sensor_on
+      sequence:
+        - service: scene.turn_on
+          data:
+            transition: 1
+          target:
+            entity_id: "scene.{{ room }}_shower"
+
+    - conditions:
+      - condition: trigger
+        id: sensor_off
+      sequence:
+        - service: script.light_on
+          data:
+            room: "{{ room }}"

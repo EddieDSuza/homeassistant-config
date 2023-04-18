@@ -1,0 +1,13 @@
+  - platform: caldav
+    url: https://caldav.icloud.com
+    username: !secret email
+    password: !secret calendar_password
+
+  - platform: caldav
+    url: https://caldav.icloud.com
+    username: !secret email
+    password: !secret calendar_password
+    custom_calendars:
+      - name: "Guests"
+        calendar: "Guests"
+        search: "."

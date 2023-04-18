@@ -1,0 +1,51 @@
+- id: 'leak_notification'
+  alias: Leak Notification
+  mode: single
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.leak
+      to: "on"
+  action:
+    - service: notify.mobile
+      data:
+        title: Leak detected!
+        message: |-
+          Leak detected in {{ expand('binary_sensor.leak')
+              | selectattr('state', 'eq', 'on')
+              | map(attribute='entity_id')
+              | map('area_name')
+              | unique
+              | list
+              | join(', ')}}!
+        data:
+          url: "/dashboard-home"
+          group: leak
+          push:
+            interruption-level: critical
+
+- id: 'smoke_notification'
+  alias: Smoke Notification
+  mode: single
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.smoke
+      to: "on"
+  action:
+    - service: notify.mobile
+      data:
+        title: Smoke detected!
+        message: |-
+          Smoke detected in {{ expand('binary_sensor.smoke')
+              | selectattr('state', 'eq', 'on')
+              | map(attribute='entity_id')
+              | map('area_name')
+              | unique
+              | list
+              | join(', ')}}!
+        data:
+          url: "/dashboard-home"
+          group: smoke
+          push:
+            interruption-level: critical

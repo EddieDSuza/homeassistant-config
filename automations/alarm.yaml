@@ -1,0 +1,228 @@
+- id: "alarm_trigger"
+  alias: Alarm Trigger
+  mode: single
+  trigger:
+    - platform: state
+      entity_id:
+        - binary_sensor.alarm_night
+      to: "on"
+    - platform: state
+      entity_id:
+        - binary_sensor.alarm_away
+      to: "on"
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: alarm_control_panel.alarm
+          state: armed_away
+        - condition: state
+          entity_id: alarm_control_panel.alarm
+          state: armed_night
+  action:
+    - if:
+        - condition: or
+          conditions:
+            - condition: and
+              conditions:
+                - condition: state
+                  entity_id: alarm_control_panel.alarm
+                  state: armed_away
+                - condition: state
+                  entity_id: binary_sensor.alarm_away
+                  state: "on"
+            - condition: and
+              conditions:
+                - condition: state
+                  entity_id: alarm_control_panel.alarm
+                  state: armed_night
+                - condition: state
+                  entity_id: binary_sensor.alarm_night
+                  state: "on"
+      then:
+        - service: alarm_control_panel.alarm_trigger
+          target:
+            entity_id: alarm_control_panel.alarm
+
+- id: "alarm_notification"
+  alias: Alarm Notification
+  mode: single
+  trigger:
+    - platform: state
+      entity_id: alarm_control_panel.alarm
+      to: armed_away
+    - platform: state
+      entity_id: alarm_control_panel.alarm
+      to: disarmed
+    - platform: state
+      entity_id: alarm_control_panel.alarm
+      to: armed_night
+  action:
+    - choose:
+        - conditions:
+            - condition: state
+              entity_id: alarm_control_panel.alarm
+              state: armed_away
+          sequence:
+            - service: notify.mobile
+              data:
+                message: Alarm has been armed for away.
+                title: Alarm
+                data:
+                  url: "/dashboard-home"
+                  group: alarm
+                  tag: alarm_status
+        - conditions:
+            - condition: state
+              entity_id: alarm_control_panel.alarm
+              state: armed_night
+          sequence:
+            - service: notify.mobile
+              data:
+                message: Alarm has been armed for night.
+                title: Alarm
+                data:
+                  url: "/dashboard-home"
+                  group: alarm
+                  tag: alarm_status
+        - conditions:
+            - condition: state
+              entity_id: alarm_control_panel.alarm
+              state: disarmed
+          sequence:
+            - service: notify.mobile
+              data:
+                message: Alarm has been disarmed.
+                title: Alarm
+                data:
+                  url: "/dashboard-home"
+                  group: alarm
+                  tag: alarm_status
+
+- id: "alarm"
+  alias: Alarm Arm & Disarm
+  mode: single
+  trigger:
+    - platform: time
+      at: "07:00:00"
+      id: morning
+    - platform: time
+      at: "23:00:00"
+      id: evening
+    - platform: state
+      entity_id: zone.home
+      id: location
+    - platform: event
+      id: notification_disarm
+      event_type: mobile_app_notification_action
+      event_data:
+        action: "notification_disarm"
+  action:
+    - choose:
+        - conditions:
+            - condition: or
+              conditions:
+                - condition: trigger
+                  id: morning
+                - condition: trigger
+                  id: location
+            - condition: numeric_state
+              entity_id: zone.home
+              above: 0
+          sequence:
+            - service: alarm_control_panel.alarm_disarm
+              target:
+                entity_id: alarm_control_panel.alarm
+        - conditions:
+            - condition: trigger
+              id: evening
+            - condition: numeric_state
+              entity_id: zone.home
+              above: 0
+          sequence:
+            - service: alarm_control_panel.alarm_arm_night
+              target:
+                entity_id: alarm_control_panel.alarm
+            - service: script.windows_notification
+              data:
+                title: "Alarm: Open windows detected!"
+                level: time-sensitive
+        - conditions:
+            - condition: trigger
+              id: location
+            - condition: numeric_state
+              entity_id: zone.home
+              below: 1
+          sequence:
+            - service: alarm_control_panel.alarm_arm_away
+              target:
+                entity_id: alarm_control_panel.alarm
+            - service: script.windows_notification
+              data:
+                title: "Alarm: Open windows detected!"
+                level: critical
+        - conditions:
+            - condition: trigger
+              id: notification_disarm
+          sequence:
+            - service: alarm_control_panel.alarm_disarm
+              target:
+                entity_id: alarm_control_panel.alarm
+
+- id: "alarm_triggered"
+  alias: Alarm Triggered
+  mode: single
+  trigger:
+    - platform: state
+      entity_id:
+        - alarm_control_panel.alarm
+      to: triggered
+  action:
+    - service: notify.mobile
+      data:
+        message: Alarm has been triggered!
+        title: Alarm
+        data:
+          url: "/dashboard-home"
+          group: alarm_triggered
+          push:
+            interruption-level: critical
+          actions:
+            - action: "notification_disarm" 
+              title: "Disarm alarm"
+              authenticationRequired: true
+              destructive: true
+    - service: homeassistant.turn_on
+      target:
+        entity_id: group.switches
+
+    - parallel:
+        - repeat:
+            until:
+              - condition: state
+                entity_id: alarm_control_panel.alarm
+                state: disarmed
+            sequence:
+              - service: light.turn_on
+                data:
+                  transition: 0
+                  rgb_color:
+                    - 255
+                    - 0
+                    - 0
+                  brightness_pct: 100
+                  effect: breathe
+                target:
+                  entity_id: light.all
+              - delay: 15
+
+        - service: media_player.turn_off
+          target:
+            entity_id:
+              - media_player.living_room_tv
+              - media_player.studio_tv
+              - media_player.bedroom_tv
+
+        - service: cover.open_cover
+          target:
+            entity_id: cover.all_covers

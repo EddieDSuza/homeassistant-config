@@ -1,0 +1,38 @@
+# lovelace_gen
+
+type: vertical-stack
+cards:
+
+  - !include
+    - ../sections/status.yaml
+    - entities: {{ status | tojson }}
+
+  - !include
+    - ../sections/scenes.yaml
+    - room: {{ room }}
+      scenes: {{ scenes | tojson }}
+
+  - !include
+    - ../sections/lights.yaml
+    - room: {{ room }}
+      lights: {{ lights | default ([]) | tojson }}
+      custom_lights: {{ custom_lights | default ([]) | tojson }}
+
+  - !include
+    - ../sections/climate.yaml
+    - room: {{ room }}
+      show_cover: {{ show_cover | default (false) }}
+      show_climate: {{ show_climate | default (false) }}
+
+  - !include
+    - ../sections/entertiment.yaml
+    - room: {{ room }}
+      media_players: {{ media_players | default ([]) | tojson }}
+
+  - !include
+    - ../sections/devices.yaml
+    - room: {{ room }}
+      devices: {{ devices | default ([]) | tojson }}
+
+  - type: custom:button-card
+    template: gap

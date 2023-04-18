@@ -1,0 +1,21 @@
+- id: 'kettle_notification'
+  alias: Kettle Notification
+  mode: single
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.kitchen_kettle_temperature
+      above: 95
+  condition:  
+    - condition: template    
+      value_template: >-      
+        {{ (as_timestamp(now()) - as_timestamp(state_attr("automation.kettle_notification", "last_triggered"))) > 1200 }}
+  action:
+    - service: notify.mobile
+      data:
+        title: Kettle
+        message: Water reached boiling temperature.
+        data:
+          url: "/dashboard-home/kitchen"
+          group: kettle
+          push:
+            interruption-level: active

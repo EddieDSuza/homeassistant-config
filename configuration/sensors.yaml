@@ -1,0 +1,24 @@
+- platform: time_date
+  display_options:
+    - "time_date"
+    - "time"
+    - "date"
+
+- platform: rest
+  name: Garbage Collection
+  resource: !secret garbage_url
+  json_attributes:
+    - residualNextDate
+    - recyclingNextDate
+    - organicNextDate
+  value_template: "{{ value_json.recyclingNextDate }}"
+
+- platform: systemmonitor
+  resources:
+    - type: disk_use_percent
+      arg: /config
+    - type: memory_use_percent
+    - type: swap_use_percent
+    - type: processor_use
+    - type: processor_temperature
+    - type: last_boot

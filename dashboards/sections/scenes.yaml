@@ -1,0 +1,37 @@
+# lovelace_gen
+
+type: vertical-stack
+cards:
+  - type: custom:button-card
+    template: subheader
+    name: Scenes
+
+  - type: custom:swipe-card
+    card_width: var(--card-width-scene)
+    parameters:
+      centeredSlides: false
+      slidesPerView: auto
+      spaceBetween: 8
+      slidesOffsetBefore: 8
+      slidesOffsetAfter: 8
+    cards:
+      {% macro column() -%}
+      - type: vertical-stack
+        cards:
+      {%- endmacro %}
+
+      {% macro scene(id, room) -%}
+          - type: custom:button-card
+            template: tile_scene
+            entity: scene.{{room}}_{{id}}
+            variables:
+              room: {{ room }}
+              id: {{id}}
+      {%- endmacro %}
+
+      {% for item in scenes %}
+      {% if (loop.index % 2 == 1) %}
+      {{ column() }}
+      {% endif %}
+          {{ scene(item, room) }}
+      {% endfor %}

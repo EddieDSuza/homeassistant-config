@@ -1,0 +1,70 @@
+- id: "dining_room_presence"
+  alias: Dining Room Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: dining_room
+      delay: 120
+
+- id: "dining_room_remote"
+  alias: Dining Room Remote
+  use_blueprint:
+    path: remote.yaml
+    input:
+      room: dining_room
+      remote: sensor.dining_room_remote
+      bright_scene: scene.dining_room_eating
+      button_two_short_action:
+        - service: cover.open_cover
+          target:
+            entity_id: cover.garage
+      button_three_short_action:
+        - service: cover.close_cover
+          target:
+            entity_id: cover.garage
+      button_four_long_action:
+        - service: scene.turn_on
+          data:
+            transition: 1
+          target:
+            entity_id:
+              - scene.kitchen_off
+              - scene.dining_room_off
+        - service: input_boolean.turn_off
+          target:
+            entity_id: 
+              - input_boolean.kitchen
+              - input_boolean.dining_room
+
+- id: "dining_room_activity"
+  alias: Dining Room Activity
+  use_blueprint:
+    path: activity.yaml
+    input:
+      room: dining_room
+      activity_scene: scene.dining_room_eating
+      activity_sensor: binary_sensor.dining_room_table
+
+- id: "dining_room_tv"
+  alias: Dining Room TV
+  use_blueprint:
+    path: tv.yaml
+    input:
+      room: dining_room
+      movies_scene: scene.dining_room_movies
+      tv: media_player.dining_room_tv
+      custom_off_action:
+        - if:
+            - condition: state
+              entity_id: binary_sensor.dining_room_table
+              state: "on"
+          then:
+            - service: scene.turn_on
+              data:
+                transition: 1
+              target:
+                entity_id: scene.dining_room_eating
+          else:
+            - service: script.light_on
+              data:
+                room: dining_room

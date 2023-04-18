@@ -1,0 +1,24 @@
+windows_notification:
+  alias: Windows - Notification
+  mode: single
+  sequence:
+    - condition: state
+      entity_id: binary_sensor.windows
+      state: 'on'
+
+    - service: notify.mobile
+      data:
+        title: '{{ title }}'
+        message: >-
+          Windows in {{ expand('binary_sensor.windows')
+            | selectattr('state', 'eq', 'on')
+            | map(attribute='entity_id')
+            | map('area_name')
+            | unique
+            | list
+            | join(', ')}} are still open. Remember to close them!
+        data:
+          url: "/dashboard-home"
+          group: windows
+          push:
+            interruption-level: '{{ level }}'

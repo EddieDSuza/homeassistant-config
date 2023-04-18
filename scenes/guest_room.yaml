@@ -1,0 +1,42 @@
+- id: 'guest_room_morning'
+  name: Guest Room Morning
+  icon: fapro:morning
+  entities:
+    light.guest_room:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'guest_room_day'
+  name: Guest Room Day
+  icon: fapro:day
+  entities:
+    light.guest_room:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'guest_room_evening'
+  name: Guest Room Evening
+  icon: fapro:evening
+  entities:
+    light.guest_room:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'guest_room_night'
+  name: Guest Room Night
+  icon: fapro:night
+  entities:
+    light.guest_room:
+      state: 'on'
+      brightness: 2
+      color_temp: 500
+
+- id: 'guest_room_off'
+  name: Guest Room Off
+  icon: mdi:power-standby
+  entities:
+    light.guest_room:
+      state: 'off'

@@ -1,0 +1,61 @@
+- id: 'bedroom_morning'
+  name: Bedroom Morning
+  icon: fapro:morning
+  entities:
+    light.bedroom:
+      state: 'on'
+      brightness: 255
+      color_temp: 300
+
+- id: 'bedroom_day'
+  name: Bedroom Day
+  icon: fapro:day
+  entities:
+    light.bedroom:
+      state: 'on'
+      brightness: 255
+      color_temp: 150
+
+- id: 'bedroom_evening'
+  name: Bedroom Evening
+  icon: fapro:evening
+  entities:
+    light.bedroom_main:
+      state: 'on'
+      brightness: 77
+    light.bedroom_bed:
+      state: 'on'
+      brightness: 180
+      color_temp: 400
+
+- id: 'bedroom_night'
+  name: Bedroom Night
+  icon: fapro:night
+  entities:
+    light.bedroom_main:
+      state: 'off'
+    light.bedroom_bed:
+      state: 'on'
+      brightness: 26
+      color_temp: 500
+
+- id: 'bedroom_off'
+  name: Bedroom Off
+  icon: mdi:power-standby
+  entities:
+    light.bedroom:
+      state: 'off'
+
+- id: 'bedroom_movies'
+  name: Bedroom Movies
+  icon: mdi:movie-open
+  entities:
+    light.bedroom_main:
+      state: 'off'
+    light.bedroom_bed:
+      state: 'on'
+      brightness: 180
+      rgb_color:
+        - 2
+        - 191
+        - 255

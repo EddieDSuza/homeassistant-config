@@ -1,0 +1,62 @@
+blueprint:
+  name: Room Automation - TV and Blinds
+  domain: automation
+  input:
+    room:
+      name: Room
+      selector:
+        area:
+
+    prevent_opening:
+      name: Prevent Opening
+      default: false
+      selector:
+        boolean: {}
+
+mode: restart
+
+trigger_variables:
+  room: !input room
+  tv: 'media_player.{{ room }}_tv'
+
+trigger:
+  - platform: template
+    id: tv_on
+    value_template: >
+      {{ is_state(tv, 'on') }}
+
+  - platform: template
+    id: tv_off
+    value_template: >
+      {{ is_state(tv, 'off') }}
+
+variables:
+  room: !input room
+  tv: 'media_player.{{ room }}_tv'
+  cover: 'cover.{{ room }}'
+  window: 'binary_sensor.{{ room }}_window'
+  prevent_opening: !input prevent_opening
+
+condition:
+  - condition: sun
+    before: sunset
+    after: sunrise
+  - "{{ is_state(window, 'off') }}"
+
+action:
+  - choose:
+      - conditions:
+          - condition: trigger
+            id: "tv_on"
+        sequence:
+          - service: cover.close_cover
+            target:
+              entity_id: "{{ cover}}"
+      - conditions:
+          - condition: trigger
+            id: "tv_off"
+          - "{{ not prevent_opening }}"
+        sequence:
+          - service: cover.open_cover
+            target:
+              entity_id: "{{ cover}}"

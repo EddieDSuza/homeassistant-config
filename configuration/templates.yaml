@@ -1,0 +1,270 @@
+- binary_sensor:
+  - name: 'Garage Door Sensor'
+    unique_id: 'garage_door'
+    state: "{{ is_state('cover.garage', ['opening', 'open', 'closing']) }}"
+    device_class: 'garage_door'
+
+  - name: 'Bathroom Shower Sensor'
+    unique_id: 'bathroom_shower'
+    state: "{{ is_state('binary_sensor.bathroom_shower_door', 'off') }}"
+    device_class: 'motion'
+
+  - name: 'En-Suite Shower Sensor'
+    unique_id: 'en_suite_shower'
+    state: "{{ is_state('binary_sensor.en_suite_shower_door', 'off') }}"
+    device_class: 'motion'
+
+  - name: 'Media Players Sensor'
+    unique_id: 'media_players'
+    state: "{{ expand(states.media_player) | selectattr('state', 'search', '(playing|on)') | map(attribute='entity_id') | list | count > 0 }}"
+
+- sensor:
+  - name: 'General Garbage Collection'
+    unique_id: 'garbage_collection_general'
+    state:  >-
+      {% set date = state_attr('sensor.garbage_collection', 'residualNextDate') %} 
+      {% set countdown = ((as_timestamp(strptime(date , "%Y-%m-%dT%H:%M:%S")) - as_timestamp(now().date()) )/ (3600*24)) | round(0) %}
+      {% if countdown == 0 %}
+      Today
+      {% elif countdown == 1 %}
+      Tomorrow
+      {% elif countdown > 7 and countdown < 14 %}
+      Next Week
+      {% else %}
+      In {{ countdown }} days 
+      {% endif %}
+
+  - name: 'Recycling Garbage Collection'
+    unique_id: 'garbage_collection_recycling'
+    state:  >-
+      {% set date = state_attr('sensor.garbage_collection', 'recyclingNextDate') %} 
+      {% set countdown = ((as_timestamp(strptime(date , "%Y-%m-%dT%H:%M:%S")) - as_timestamp(now().date()) )/ (3600*24)) | round(0) %}
+      {% if countdown == 0 %}
+      Today
+      {% elif countdown == 1 %}
+      Tomorrow
+      {% elif countdown > 7 and countdown < 14 %}
+      Next Week
+      {% else %}
+      In {{ countdown }} days 
+      {% endif %}
+
+  - name: 'Garden Garbage Collection'
+    unique_id: 'garbage_collection_garden'
+    state:  >-
+      {% set date = state_attr('sensor.garbage_collection', 'organicNextDate') %} 
+      {% set countdown = ((as_timestamp(strptime(date , "%Y-%m-%dT%H:%M:%S")) - as_timestamp(now().date()) )/ (3600*24)) | round(0) %}
+      {% if countdown == 0 %}
+      Today
+      {% elif countdown == 1 %}
+      Tomorrow
+      {% elif countdown > 7 and countdown < 14 %}
+      Next Week
+      {% else %}
+      In {{ countdown }} days 
+      {% endif %}
+
+
+  - name: 'Living Room Active Scene'
+    unique_id: 'living_room_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.living_room')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Kitchen Active Scene'
+    unique_id: 'kitchen_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.kitchen')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Dining Room Active Scene'
+    unique_id: 'dining_room_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.dining_room')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Office Active Scene'
+    unique_id: 'office_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.office')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Hallway Active Scene'
+    unique_id: 'hallway_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.hallway')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Toilet Active Scene'
+    unique_id: 'toilet_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.toilet')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Utility Room Active Scene'
+    unique_id: 'utility_room_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.utility_room')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Bedroom Active Scene'
+    unique_id: 'bedroom_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.bedroom')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Studio Active Scene'
+    unique_id: 'studio_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.studio')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Dressing Room Active Scene'
+    unique_id: 'dressing_room_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.dressing_room')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Bathroom Active Scene'
+    unique_id: 'bathroom_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.bathroom')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'En-Suite Active Scene'
+    unique_id: 'en_suite_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.en_suite')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Landing Active Scene'
+    unique_id: 'landing_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.landing')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Guest Room Active Scene'
+    unique_id: 'guest_room_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.guest_room')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Printer Room Active Scene'
+    unique_id: 'printer_room_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.printer_room')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Garage Active Scene'
+    unique_id: 'garage_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.garage')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}
+
+  - name: 'Outside Active Scene'
+    unique_id: 'outside_active_scene'
+    state:  >-
+      {{ 
+        states.scene 
+          | selectattr('entity_id', 'search', 'scene.outside')
+          | sort(attribute='state')
+          | map(attribute='entity_id')
+          | list
+          | last
+      }}

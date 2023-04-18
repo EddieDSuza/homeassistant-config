@@ -1,0 +1,7 @@
+- id: "utility_room_presence"
+  alias: Utility Room Presence
+  use_blueprint:
+    path: presence.yaml
+    input:
+      room: utility_room
+      delay: 0

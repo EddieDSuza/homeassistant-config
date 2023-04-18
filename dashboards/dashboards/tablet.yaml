@@ -1,0 +1,24 @@
+button_card_templates: !include_dir_merge_named ../templates
+
+views:
+  - theme: Backend-selected
+    title: 'Home'
+    path: 'home'
+    subview: false
+    type: panel
+    cards: 
+      - !include ../rooms/tablet.yaml
+  - theme: Backend-selected
+    title: 'Kitchen'
+    path: 'kitchen'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/kitchen.yaml
+  - theme: Backend-selected
+    title: 'Dining Room'
+    path: 'dining_room'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/dining_room.yaml

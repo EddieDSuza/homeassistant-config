@@ -1,0 +1,129 @@
+button_card_templates: !include_dir_merge_named ../templates
+
+views:
+  - theme: Backend-selected
+    title: 'Home'
+    path: 'home'
+    subview: false
+    type: panel
+    cards:
+      - !include ../rooms/home.yaml
+  - theme: Backend-selected
+    title: 'Living Room'
+    path: 'living_room'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/living_room.yaml
+  - theme: Backend-selected
+    title: 'Kitchen'
+    path: 'kitchen'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/kitchen.yaml
+  - theme: Backend-selected
+    title: 'Dining Room'
+    path: 'dining_room'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/dining_room.yaml
+  - theme: Backend-selected
+    title: 'Office'
+    path: 'office'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/office.yaml
+  - theme: Backend-selected
+    title: 'Hallway'
+    path: 'hallway'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/hallway.yaml
+  - theme: Backend-selected
+    title: 'Toilet'
+    path: 'toilet'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/toilet.yaml
+  - theme: Backend-selected
+    title: 'Utility Room'
+    path: 'utility_room'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/utility_room.yaml
+  - theme: Backend-selected
+    title: 'Bedroom'
+    path: 'bedroom'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/bedroom.yaml
+  - theme: Backend-selected
+    title: 'Studio'
+    path: 'studio'
+    subview: true
+    type: panel
+    cards: 
+      - !include ../rooms/studio.yaml
+  - theme: Backend-selected
+    title: 'Dressing Room'
+    path: 'dressing_room'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/dressing_room.yaml
+  - theme: Backend-selected
+    title: 'Bathroom'
+    path: 'bathroom'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/bathroom.yaml
+  - theme: Backend-selected
+    title: 'En-Suite'
+    path: 'en_suite'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/en_suite.yaml
+  - theme: Backend-selected
+    title: 'Landing'
+    path: 'landing'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/landing.yaml
+  - theme: Backend-selected
+    title: 'Printer Room'
+    path: 'printer_room'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/printer_room.yaml
+  - theme: Backend-selected
+    title: 'Guest Room'
+    path: 'guest_room'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/guest_room.yaml
+  - theme: Backend-selected
+    title: 'Outside'
+    path: 'outside'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/outside.yaml
+  - theme: Backend-selected
+    title: 'Garage'
+    path: 'garage'
+    subview: true
+    type: panel
+    cards:
+      - !include ../rooms/garage.yaml
