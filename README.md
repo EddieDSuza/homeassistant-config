@@ -154,6 +154,11 @@ pm2 --name ps5-mqtt start npm -- start
 pm2 save
 ```
 
+# Dashboards
+|Mobile|Tablet|
+|---|---|
+|![](https://user-images.githubusercontent.com/9057322/232841689-82f75744-165b-4e1f-8d83-de346ec01126.mov)|![](https://user-images.githubusercontent.com/9057322/232843773-9b5d5a87-424a-4e83-be59-5b67638338f9.jpeg)|
+
 
 
 
